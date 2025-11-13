@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: concept_api_how_access.html 
+keywords: rest api, deploy rest api, rest, access, accessing, how to access 
+summary: Devido à flexibilidade inerente dos serviços web REST, a API ONTAP Select Deploy pode ser acessada de diversas maneiras diferentes. 
+---
+= Como acessar a API ONTAP Select Deploy
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Devido à flexibilidade inerente dos serviços web REST, a API ONTAP Select Deploy pode ser acessada de diversas maneiras diferentes.
+
+
+NOTE: A API REST incluída no ONTAP Select Deploy recebe um número de versão. O número da versão da API é independente do número da versão do Deploy. O utilitário de administração Deploy do ONTAP Select 9.17.1 inclui a versão 3 da API REST.
+
+
+
+== Implantar interface de usuário nativa do utilitário
+
+A principal maneira de acessar a API é por meio da interface de usuário web do ONTAP Select Deploy. O navegador faz chamadas para a API e reformata os dados de acordo com o design da interface de usuário. Você também acessa a API por meio da interface de linha de comando do utilitário Deploy.
+
+
+
+== Página de documentação on-line do ONTAP Select Deploy
+
+A página de documentação online do ONTAP Select Deploy oferece um ponto de acesso alternativo ao usar um navegador. Além de fornecer uma maneira de executar chamadas de API individuais diretamente, a página também inclui uma descrição detalhada da API, incluindo parâmetros de entrada e outras opções para cada chamada. As chamadas de API são organizadas em diversas áreas ou categorias funcionais.
+
+
+
+== Programa personalizado
+
+Você pode acessar a API de Implantação usando qualquer uma das diversas linguagens de programação e ferramentas. As opções mais populares incluem Python, Java e cURL. Um programa, script ou ferramenta que utiliza a API atua como um cliente de serviços web REST. O uso de uma linguagem de programação permite que você entenda melhor a API e oferece a oportunidade de automatizar as implantações do ONTAP Select .

@@ -1,0 +1,80 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_operation.html 
+keywords: license, licensing, Capacity Pools, operation details 
+summary: O modelo de licenciamento de Pools de Capacidade é diferente do modelo de Níveis de Capacidade. Em vez de dedicar capacidade de armazenamento a cada nó individual, a capacidade de armazenamento é alocada a um pool e compartilhada entre vários nós. Componentes e processos adicionais foram criados para dar suporte ao modelo de Pools de Capacidade. 
+---
+= Detalhes operacionais para o modelo de licenciamento de pools de capacidade ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+O modelo de licenciamento de Pools de Capacidade é diferente do modelo de Níveis de Capacidade. Em vez de dedicar capacidade de armazenamento a cada nó individual, a capacidade de armazenamento é alocada a um pool e compartilhada entre vários nós. Componentes e processos adicionais foram criados para dar suporte ao modelo de Pools de Capacidade.
+
+
+
+== Gerenciador de licenças
+
+O Gerenciador de Licenças é executado como um processo separado dentro de cada instância do utilitário de administração Deploy. Algumas das funções fornecidas pelo LM incluem:
+
+* Gere um número de série exclusivo de vinte dígitos para cada nó com base no número de série da licença do Capacity Pool
+* Crie concessões para capacidade dos pools de capacidade compartilhados com base em solicitações dos nós ONTAP Select
+* Relatar informações de uso do pool por meio da interface do usuário do Deploy
+
+
+
+
+== Características do arrendamento
+
+O armazenamento alocado para cada agregado de dados em um nó que utiliza uma licença de Pool de Capacidade deve ter um lease associado. O nó solicita um lease de armazenamento e, se a capacidade estiver disponível, o Gerenciador de Licenças responde com um lease. Cada lease possui os seguintes atributos explícitos ou implícitos:
+
+* Gerenciador de Licenças Cada nó ONTAP Select está associado a uma instância do Gerenciador de Licenças
+* Pool de Capacidade Cada nó ONTAP Select está associado a um Pool de Capacidade
+* Alocação de armazenamento Um valor de capacidade específico é atribuído no contrato de locação
+* Data e hora de expiração Os arrendamentos têm uma duração entre uma hora e sete dias, dependendo da configuração do usuário.
+
+
+
+
+== ID de bloqueio de licença
+
+Cada instância do Gerenciador de Licenças e, portanto, cada instância correspondente do utilitário de Implantação, é identificada com um número exclusivo de 128 bits. Esse número é combinado com o número de série da licença do Pool de Capacidade de nove dígitos para bloquear o pool a uma instância específica do Gerenciador de Licenças (que é, na verdade, uma instância de Implantação). Você deve fornecer ambos os valores no site de suporte da NetApp como parte da geração do Arquivo de Licença da NetApp (NLF).
+
+Você pode determinar o ID de bloqueio de licença para sua instância de implantação usando a interface de usuário da Web das seguintes maneiras:
+
+* Página de Introdução Esta página é exibida quando você faz login pela primeira vez no Deploy. Você também pode exibi-la clicando na caixa suspensa no canto superior direito da página e selecionando Introdução. O LLID é exibido na seção Adicionar Licenças.
+* Administração Clique na aba *Administração* na parte superior da página, depois clique em *Sistemas* e *Configurações*.
+
+
+
+
+== Operações básicas de arrendamento
+
+Um nó ONTAP Select deve localizar ou solicitar uma concessão de capacidade válida sempre que um agregado de dados for criado, expandido ou alterado. Uma concessão obtida de uma solicitação anterior que ainda seja válida pode ser usada, ou uma nova concessão pode ser solicitada, se necessário. O nó ONTAP Select executa as seguintes etapas para localizar uma concessão de pool de capacidade:
+
+. Se um arrendamento existente estiver localizado no nó, ele será usado desde que todas as seguintes condições sejam verdadeiras:
++
+** O contrato de locação não expirou
+** A solicitação de armazenamento do agregado não excede a capacidade de locação
+
+
+. Se um arrendamento existente não puder ser localizado, o nó solicitará um novo arrendamento ao Gerenciador de Licenças.
+
+
+
+
+== Retornar capacidade de armazenamento para um pool de capacidade
+
+A capacidade de armazenamento é alocada de um Pool de Capacidade conforme necessário, e cada nova solicitação pode reduzir o armazenamento disponível no pool. A capacidade de armazenamento é devolvida ao pool em diversas situações, incluindo:
+
+* O arrendamento de um agregado de dados expira e não é renovado pelo nó
+* O agregado de dados é excluído
+
+
+
+NOTE: Se uma máquina virtual ONTAP Select for excluída, todos os leases ativos permanecerão em vigor até expirarem. Quando isso ocorre, a capacidade é devolvida ao pool.

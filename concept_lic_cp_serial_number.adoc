@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_serial_number.html 
+keywords: license, licensing, Capacity Pools, node serial numbers 
+summary: Com o modelo de licenciamento por Níveis de Capacidade, o número de série do nó de nove dígitos é o mesmo que o número de série da licença atribuída ao nó. No entanto, os números de série atribuídos aos nós usando o modelo de licenciamento por Pools de Capacidade têm um formato diferente. 
+---
+= Números de série de nós para o modelo de licenciamento de pools de capacidade ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Com o modelo de licenciamento por Níveis de Capacidade, o número de série do nó de nove dígitos é o mesmo que o número de série da licença atribuída ao nó. No entanto, os números de série atribuídos aos nós usando o modelo de licenciamento por Pools de Capacidade têm um formato diferente.
+
+O número de série de um nó que usa o licenciamento de Pools de Capacidade tem o seguinte formato:
+
+`999 ppppppppp nnnnnnnn`
+
+
+NOTE: Espaços foram adicionados para maior clareza, mas não fazem parte do número de série real.
+
+Cada seção do número de série do nó é descrita na tabela a seguir, da esquerda para a direita.
+
+[cols="15,85"]
+|===
+| Seção | Descrição 
+
+
+| '999' | Valor constante de três dígitos reservado pela NetApp. 
+
+
+| pppppppppp | Número de série de licença variável de nove dígitos atribuído ao Pool de Capacidade pela NetApp 
+
+
+| nnnnnnn | Valor variável de oito dígitos gerado pelo Gerenciador de Licenças para cada nó usando o Pool de Capacidade 
+|===
+
+NOTE: Atenção: Ao abrir um chamado com o suporte da NetApp envolvendo um nó que usa uma licença de Pool de Capacidade, você não pode fornecer o número de série completo do nó, com vinte dígitos. Em vez disso, você deve fornecer o número de série de nove dígitos da licença de Pool de Capacidade. Você pode derivar o número de série da licença a partir do número de série do nó, conforme mostrado acima. Ignore os três primeiros dígitos do número de série do nó ('999') e extraia os próximos nove dígitos (ppppppppp).

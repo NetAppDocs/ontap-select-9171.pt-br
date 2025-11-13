@@ -1,0 +1,92 @@
+---
+sidebar: sidebar 
+permalink: concept_stor_vsan_external.html 
+keywords: ontap select, vsan and external array configurations, vnas architecture 
+summary: 'As implementações de NAS virtual (vNAS) oferecem suporte a clusters ONTAP Select no vSAN, alguns produtos HCI, tecnologia NetApp HCI e tipos de datastores de arrays externos. A infraestrutura subjacente dessas configurações proporciona resiliência ao datastore.' 
+---
+= ONTAP Select configurações de vSAN e array externo
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+As implementações de NAS virtual (vNAS) oferecem suporte a clusters ONTAP Select em SAN virtual (vSAN), alguns produtos HCI e tipos de datastores de matriz externa. A infraestrutura subjacente dessas configurações proporciona resiliência ao datastore.
+
+O requisito mínimo é que o hipervisor que você está usando (VMware ESXi ou KVM em um host Linux compatível) suporte a configuração subjacente.  Se o hipervisor for ESXi, ele deverá estar listado nas respectivas HCLs da VMware.
+
+
+
+== Arquitetura vNAS
+
+A nomenclatura vNAS é usada para todas as configurações que não utilizam DAS. Para clusters ONTAP Select de vários nós, isso inclui arquiteturas nas quais os dois nós ONTAP Select no mesmo par de HA compartilham um único armazenamento de dados (incluindo armazenamentos de dados vSAN). Os nós também podem ser instalados em armazenamentos de dados separados do mesmo array externo compartilhado. Isso permite eficiências de armazenamento no lado do array para reduzir o espaço ocupado geral de todo o par de HA do ONTAP Select . A arquitetura das soluções vNAS do ONTAP Select é muito semelhante à do ONTAP Select em DAS com um controlador RAID local. Ou seja, cada nó do ONTAP Select continua a ter uma cópia dos dados de seu parceiro de HA. As políticas de eficiência de armazenamento do ONTAP são definidas por nó. Portanto, as eficiências de armazenamento no lado do array são preferíveis porque podem ser potencialmente aplicadas a conjuntos de dados de ambos os nós do ONTAP Select .
+
+Também é possível que cada nó ONTAP Select em um par de HA utilize um array externo separado. Essa é uma opção comum ao usar o ONTAP Select Metrocluster SDS com armazenamento externo.
+
+Ao usar matrizes externas separadas para cada nó do ONTAP Select , é muito importante que as duas matrizes forneçam características de desempenho semelhantes à VM do ONTAP Select .
+
+
+
+=== Arquiteturas vNAS versus DAS local com controladores RAID de hardware
+
+A arquitetura vNAS é logicamente mais semelhante à arquitetura de um servidor com DAS e um controlador RAID. Em ambos os casos, o ONTAP Select consome espaço de armazenamento de dados. Esse espaço de armazenamento de dados é dividido em VMDKs, e esses VMDKs formam os agregados de dados tradicionais do ONTAP . O ONTAP Deploy garante que os VMDKs sejam dimensionados corretamente e atribuídos ao plex correto (no caso de pares de alta disponibilidade) durante as operações de criação de cluster e adição de armazenamento.
+
+Existem duas diferenças principais entre vNAS e DAS com controlador RAID. A diferença mais imediata é que o vNAS não requer um controlador RAID. O vNAS pressupõe que o array externo subjacente forneça a persistência e a resiliência de dados que um DAS com controlador RAID ofereceria. A segunda diferença, mais sutil, tem a ver com o desempenho da NVRAM .
+
+
+
+== vNAS NVRAM
+
+A NVRAM do ONTAP Select é um VMDK. Isso significa que o ONTAP Select emula um espaço endereçável por byte ( NVRAM tradicional) sobre um dispositivo endereçável por bloco (VMDK). No entanto, o desempenho da NVRAM é absolutamente crítico para o desempenho geral do nó ONTAP Select .
+
+Em configurações DAS com um controlador RAID de hardware, o cache do controlador RAID de hardware atua como cache NVRAM , pois todas as gravações no VMDK da NVRAM são primeiramente armazenadas no cache do controlador RAID.
+
+Para arquiteturas VNAS, o ONTAP Deploy configura automaticamente os nós do ONTAP Select com um argumento de inicialização chamado Single Instance Data Logging (SIDL). Quando esse argumento de inicialização está presente, o ONTAP Select ignora a NVRAM e grava a carga de dados diretamente no agregado de dados. A NVRAM é usada apenas para registrar o endereço dos blocos alterados pela operação WRITE. A vantagem desse recurso é evitar uma gravação dupla: uma gravação na NVRAM e uma segunda gravação quando a NVRAM é descentralizada. Esse recurso só é habilitado para vNAS porque as gravações locais no cache do controlador RAID têm uma latência adicional insignificante.
+
+O recurso SIDL não é compatível com todos os recursos de eficiência de armazenamento do ONTAP Select . O recurso SIDL pode ser desabilitado no nível agregado usando o seguinte comando:
+
+[listing]
+----
+storage aggregate modify -aggregate aggr-name -single-instance-data-logging off
+----
+Observe que o desempenho de gravação será afetado se o recurso SIDL estiver desativado. É possível reativar o recurso SIDL após todas as políticas de eficiência de armazenamento em todos os volumes desse agregado serem desativadas:
+
+[listing]
+----
+volume efficiency stop -all true -vserver * -volume * (all volumes in the affected aggregate)
+----
+
+
+== Colocar nós ONTAP Select ao usar vNAS no ESXi
+
+O ONTAP Select inclui suporte para clusters ONTAP Select de vários nós em armazenamento compartilhado. O ONTAP Deploy permite a configuração de vários nós ONTAP Select no mesmo host ESX, desde que esses nós não façam parte do mesmo cluster. Observe que essa configuração é válida apenas para ambientes VNAS (armazenamentos de dados compartilhados). Várias instâncias do ONTAP Select por host não são suportadas ao usar armazenamento DAS, pois essas instâncias competem pelo mesmo controlador RAID de hardware.
+
+O ONTAP Deploy garante que a implantação inicial do cluster VNAS multinó não coloque várias instâncias do ONTAP Select do mesmo cluster no mesmo host. A figura a seguir ilustra um exemplo de implantação correta de dois clusters de quatro nós que se intercruzam em dois hosts.
+
+*Implantação inicial de clusters VNAS multinós*
+
+image:ST_14.jpg["Implantação inicial de clusters VNAS multinós"]
+
+Após a implantação, os nós do ONTAP Select podem ser migrados entre hosts. Isso pode resultar em configurações não ideais e sem suporte, nas quais dois ou mais nós do ONTAP Select do mesmo cluster compartilham o mesmo host subjacente. A NetApp recomenda a criação manual de regras de antiafinidade de VM para que a VMware mantenha automaticamente a separação física entre os nós do mesmo cluster, não apenas os nós do mesmo par de HA.
+
+
+NOTE: As regras antiafinidade exigem que o DRS esteja habilitado no cluster ESX.
+
+Veja o exemplo a seguir sobre como criar uma regra antiafinidade para as VMs do ONTAP Select . Se o cluster do ONTAP Select contiver mais de um par de HA, todos os nós do cluster deverão ser incluídos nessa regra.
+
+image:ST_15.jpg["Regras de VM/Host"]
+
+image:ST_16.jpg["Editar regra de VM/Host"]
+
+Dois ou mais nós ONTAP Select do mesmo cluster ONTAP Select podem ser encontrados no mesmo host ESX por um dos seguintes motivos:
+
+* O DRS não está presente devido a limitações de licença do VMware vSphere ou se o DRS não estiver habilitado.
+* A regra antiafinidade do DRS é ignorada porque uma operação de HA do VMware ou uma migração de VM iniciada pelo administrador tem precedência.
+
+
+Observe que o ONTAP Deploy não monitora proativamente os locais de VM do ONTAP Select . No entanto, uma operação de atualização de cluster reflete esta configuração não suportada nos logs do ONTAP Deploy:
+
+image:ST_17.PNG["Registros de implantação do ONTAP"]

@@ -1,0 +1,128 @@
+---
+sidebar: sidebar 
+permalink: task_chk_nvme_configure.html 
+keywords: ontap select, nvme storage, host preparation 
+summary: Se você planeja usar unidades NVMe com RAID de software, precisará configurar o host para reconhecer as unidades. 
+---
+= Configurar um host ONTAP Select para usar unidades NVMe
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Se você planeja usar unidades NVMe com RAID de software, precisará configurar o host ESXi ou KVM para reconhecer as unidades.
+
+Use o VMDirectPath I/O Pass-through nos dispositivos NVMe para maximizar a eficiência dos dados. Esta configuração expõe as unidades à máquina virtual ONTAP Select , permitindo que o ONTAP tenha acesso PCI direto ao dispositivo.
+
+
+
+== Passo 1: Configure o host
+
+Configure o host ESXi ou KVM para reconhecer as unidades.
+
+.Antes de começar
+Certifique-se de que seu ambiente de implantação atenda aos seguintes requisitos mínimos:
+
+* Para um host ESX, ONTAP Select com um utilitário de administração Deploy compatível.
+* Para um host KVM, ONTAP Select 9.17.1 com um utilitário de administração de implantação compatível
+* Oferta de licença de plataforma XL Premium ou uma licença de avaliação de 90 dias
+* O host ESXi ou KVM está executando uma versão do hipervisor compatível:
++
+[role="tabbed-block"]
+====
+.ESXi
+--
+O ESXi é compatível com as seguintes versões do hipervisor:
+
+** VMware ESXi 9.0
+** VMware ESXi 8.0 U3
+** VMware ESXi 8.0 U2
+** VMware ESXi 8.0 U1 (compilação 21495797)
+** VMware ESXi 8.0 GA (compilação 20513097)
+** VMware ESXi 7.0 GA (compilação 15843807 ou superior), incluindo 7.0 U1, U2 e U3C
+
+
+--
+.KVM
+--
+O KVM é suportado nas seguintes versões do hipervisor:
+
+** Red Hat Enterprise Linux 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6
+** Rocky Linux 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6
+
+
+--
+====
+* Dispositivos NVMe em conformidade com a especificação 1.0 ou posterior
+
+
+Siga olink:kvm-host-configuration-and-preparation-checklist["lista de verificação de preparação do anfitrião"] e revise as informações necessárias para olink:reference_chk_deploy_req_info.html["instalação do utilitário de implantação"] e olink:reference_chk_select_req_info.html["Instalação do ONTAP Select"] Para obter mais informações.
+
+.Sobre esta tarefa
+Você deve executar este procedimento antes de criar um novo cluster ONTAP Select . Você também pode executar o procedimento para configurar unidades NVMe adicionais para um cluster RAID NVMe de software existente. Nesse caso, após configurar as unidades, você deve adicioná-las por meio do Deploy, como faria com unidades SSD adicionais. A principal diferença é que o Deploy detecta as unidades NVMe e reinicializa os nós. Ao adicionar unidades NVMe a um cluster existente, observe o seguinte sobre o processo de reinicialização:
+
+* O Deploy cuida da orquestração da reinicialização.
+* A aquisição e devolução do HA são realizadas de forma ordenada, mas pode levar muito tempo para ressincronizar os agregados.
+* Um cluster de nó único sofrerá tempo de inatividade.
+
+
+Verlink:concept_stor_capacity_inc.html["Aumentar a capacidade de armazenamento"] Para obter informações adicionais.
+
+.Passos
+. Acesse o menu *Configuração do BIOS* no host para habilitar o suporte à virtualização de E/S.
+. Habilite a configuração *Intel VT para E/S Direcionada (VT-d)*.
++
+image:nvme_01.png["Configuração de soquete"]
+
+. Alguns servidores oferecem suporte para *Intel Volume Management Device (Intel VMD)*. Quando habilitado, isso torna os dispositivos NVMe disponíveis invisíveis para o hipervisor ESXi ou KVM; desative esta opção antes de prosseguir.
++
+image:nvme_07.png["Configuração de soquete, VMD"]
+
+. Configure as unidades NVMe para passagem para máquinas virtuais.
++
+.. No vSphere, abra a visualização *Configurar* do host e selecione *Editar* em *Hardware: dispositivos PCI*.
+.. Selecione as unidades NVMe que você deseja usar para o ONTAP Select.
++
+O exemplo de saída a seguir mostra as unidades disponíveis para um host ESXi:
+
++
+image:nvme_02.png["Editar disponibilidade do dispositivo PCI"]
+
++
+
+NOTE: Você precisa de um armazenamento de dados VMFS que também seja suportado por um dispositivo NVMe para hospedar os discos do sistema ONTAP Select VM e a NVRAM virtual. Deixe pelo menos uma unidade NVMe disponível para essa finalidade ao configurar as outras para passagem PCI.
+
+.. Selecione *OK*. Os dispositivos selecionados indicam *Disponível (pendente)*.
+
+
+. Selecione *Reinicializar este host*.
++
+O exemplo de saída a seguir é para um host ESXi:
+
++
+image:nvme_03.png["Reinicializar este host"]
+
+
+
+
+
+== Etapa 2: Instale o utilitário ONTAP Select Deploy
+
+Após a preparação dos hosts, você pode instalar o utilitário ONTAP Select Deploy. O Deploy orienta você na criação de clusters de armazenamento ONTAP Select nos hosts recém-preparados. Durante esse processo, o Deploy detecta a presença das unidades NVMe configuradas para pass-through e as seleciona automaticamente para uso como discos de dados ONTAP . Você pode ajustar a seleção padrão, se necessário.
+
+
+NOTE: No máximo 14 dispositivos NVMe são suportados para cada nó ONTAP Select .
+
+O exemplo de saída a seguir é para um host ESXi:
+
+image:nvme_04.png["ONTAP Select"]
+
+Após a implantação bem-sucedida do cluster, o ONTAP System Manager permite provisionar o armazenamento de acordo com as práticas recomendadas. O ONTAP ativa automaticamente recursos de eficiência de armazenamento otimizados para flash, que aproveitam ao máximo o seu armazenamento NVMe.
+
+image:nvme_05.png["preparando armazenamento local"]
+
+image:nvme_06.png["Gerente do Sistema ONTAP"]

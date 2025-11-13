@@ -1,0 +1,70 @@
+---
+sidebar: sidebar 
+permalink: reference_chk_select_req_info.html 
+keywords: ontap select, pre-installation, vmware 
+summary: Como parte da preparação para implantar um cluster ONTAP Select em um ambiente VMware, colete as informações necessárias ao usar o utilitário de administração ONTAP Select Deploy para implantar e configurar o cluster. 
+---
+= Informações necessárias para instalação do ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Como parte da preparação para implantar um cluster ONTAP Select em um ambiente VMware, colete as informações necessárias ao usar o utilitário de administração ONTAP Select Deploy para implantar e configurar o cluster.
+
+Algumas das informações coletadas se aplicam ao próprio cluster, enquanto outras informações se aplicam aos nós individuais no cluster.
+
+
+
+== Informações em nível de cluster
+
+Você deve coletar informações relacionadas ao cluster ONTAP Select .
+
+[cols="35,65"]
+|===
+| Informações do cluster | Descrição 
+
+
+| Nome do cluster | Identificador exclusivo do cluster. 
+
+
+| Modo de licenciamento | Avaliação ou licenciamento adquirido. 
+
+
+| Configuração de IP para o cluster | Configuração de IP para clusters e nós, incluindo: * Endereço IP de gerenciamento do cluster * Máscara de sub-rede * Gateway padrão 
+|===
+
+
+== Informações em nível de host
+
+Você deve coletar informações relacionadas a cada um dos nós no cluster ONTAP Select .
+
+[cols="35,65"]
+|===
+| Informações do cluster | Descrição 
+
+
+| Nome do host | Identificador exclusivo do host. 
+
+
+| Nome de domínio do host | Nome de domínio totalmente qualificado do host. 
+
+
+| Configuração de IP para os nós | Endereço IP de gerenciamento para cada nó no cluster. 
+
+
+| Nó espelho | Nome do nó associado no par HA (somente clusters com vários nós). 
+
+
+| Pool de armazenamento | Nome do pool de armazenamento usado. 
+
+
+| Discos de armazenamento | Lista de discos se estiver usando RAID de software. 
+
+
+| Número de série | Se você estiver implantando com uma licença adquirida, o número de série exclusivo de nove dígitos fornecido pela NetApp. 
+|===

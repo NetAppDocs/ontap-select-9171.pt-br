@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_production.html 
+keywords: license, licensing, production, purchased, standard, premium, premium xl 
+summary: Após determinar se o ONTAP Select é adequado para sua organização, você poderá adquirir as licenças necessárias para dar suporte a uma implantação de produção. Você deve escolher o modelo de licenciamento por Níveis de Capacidade ou Pools de Capacidade, bem como a capacidade de armazenamento para cada implantação. 
+---
+= ONTAP Select adquiriu licenças para implantações de produção
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Após determinar se o ONTAP Select é adequado para sua organização, você poderá adquirir as licenças necessárias para dar suporte a uma implantação de produção. Você deve escolher o modelo de licenciamento por Níveis de Capacidade ou Pools de Capacidade, bem como a capacidade de armazenamento para cada implantação.
+
+
+
+== Características comuns de licenciamento
+
+Os modelos de licenciamento _Níveis de Capacidade_ e _Pools de Capacidade_ são muito diferentes em vários aspectos. No entanto, os dois modelos de licenciamento compartilham várias características em comum, incluindo:
+
+* Você deve adquirir uma ou mais licenças conforme necessário ao implantar o ONTAP Select em um ambiente de produção.
+* A capacidade de armazenamento de uma licença é alocada em incrementos de 1 TB.
+* A capacidade de armazenamento identifica a capacidade bruta e corresponde ao tamanho total permitido dos discos de dados disponíveis para a máquina virtual ONTAP Select .
+* Todas as ofertas de licenciamento de plataforma são suportadas (padrão, premium, premium XL).
+* Você deve entrar em contato com sua equipe de conta ou parceiro da NetApp para obter assistência, conforme necessário, ao adquirir as licenças necessárias.
+* Você deve carregar os arquivos de licença no utilitário de administração Deploy, que então aplica as licenças com base no modelo de licenciamento.
+* Depois de instalar e aplicar uma licença, você pode adicionar capacidade adicional entrando em contato com sua equipe de conta ou parceiro da NetApp para obter uma licença atualizada.
+* Ambos os nós em um par HA devem ter a mesma capacidade de armazenamento e licença.
+* Um nó ONTAP Select implantado inicialmente com uma licença adquirida não pode ser convertido em uma licença de avaliação.
+
+
+
+
+== Modelo de licenciamento de níveis de capacidade
+
+Existem várias características exclusivas do modelo de licenciamento de níveis de capacidade, incluindo:
+
+* Você deve adquirir uma licença para cada nó do ONTAP Select .
+* O valor mínimo que você pode comprar é 1 TB.
+* Cada licença do nível de capacidade tem uma capacidade de armazenamento e é bloqueada para um nó específico.
+* Um número de série de licença de nove dígitos é gerado pela NetApp para cada nó ONTAP Select .
+* O armazenamento alocado a um nó é perpétuo (não é necessária renovação).
+* O número de série do nó tem nove dígitos e é igual ao número de série da licença.
+* Você pode aplicar o arquivo de licença durante a implantação do cluster ou dentro de 30 dias após a criação do cluster.
+
+
+
+
+== Modelo de licenciamento de pools de capacidade
+
+Existem várias características exclusivas do modelo de licenciamento de Pools de Capacidade, incluindo:
+
+* Você deve comprar uma licença para cada Pool de Capacidade compartilhado.
+* O valor mínimo que você pode comprar é 2 TB.
+* Cada licença do Capacity Pool tem uma capacidade de armazenamento e é bloqueada para uma instância específica do License Manager.
+* Um número de série de licença de nove dígitos é gerado pela NetApp para cada pool de capacidade.
+* O armazenamento alocado a um Pool de Capacidade é válido apenas por um período específico com base na compra (renovação necessária).
+* O número de série do nó tem vinte dígitos e é gerado pelo Gerenciador de Licenças com base no número de série da licença do Pool de Capacidade.
+* Cada nó aluga automaticamente capacidade de armazenamento para seus agregados de dados locais de um pool de capacidade compartilhado.
+
+
+Para obter mais detalhes sobre o modelo de licenciamento de pools de capacidade, consulte o _Modelo de licenciamento de pools de capacidade_ para obter mais informações.

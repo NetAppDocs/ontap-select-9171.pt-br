@@ -1,0 +1,484 @@
+---
+sidebar: sidebar 
+permalink: task_cli_deploy_cluster.html 
+keywords: administer, administering, cli, create cluster, deploy cluster 
+summary: Você pode usar a interface de linha de comando fornecida com o utilitário de administração ONTAP Select Deploy para criar um cluster ONTAP Select de nó único ou de vários nós. 
+---
+= Implantar um cluster ONTAP Select usando a CLI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode usar a interface de linha de comando fornecida com o utilitário de administração ONTAP Select Deploy para criar um cluster ONTAP Select de nó único ou de vários nós.
+
+
+
+== Etapa 1: preparar para a implantação
+
+Antes de criar um cluster ONTAP Select em um hipervisor, você deve entender a preparação necessária.
+
+.Passos
+. Preparar para anexar armazenamento ao nó ONTAP Select
++
+[role="tabbed-block"]
+====
+.RAID de hardware
+--
+Se você usar um controlador RAID de hardware local, deverá criar pelo menos um armazenamento de dados (ESX) ou umlink:kvm-host-configuration-and-preparation-checklist.html#step-2-create-a-storage-pool["pool de armazenamento (KVM)"] em cada nó para os dados do sistema, bem como para os agregados de dados raiz. Você deve anexar o pool de armazenamento como parte da configuração do nó ONTAP Select .
+
+--
+.RAID de software
+--
+Se você usa RAID por software, deve criar pelo menos um armazenamento de dados (ESX) ou umlink:kvm-host-configuration-and-preparation-checklist.html#step-2-create-a-storage-pool["pool de armazenamento (KVM)"] Para os dados do sistema, certifique-se de que as unidades SSD estejam disponíveis para os agregados de dados e raiz. Você deve anexar o pool de armazenamento e os discos como parte da configuração do nó ONTAP Select .
+
+--
+====
+. Versões ONTAP Select disponíveis
++
+O utilitário de administração Deploy contém uma única versão do ONTAP Select. Se você deseja implantar clusters usando uma versão anterior do ONTAP Select, primeiro você develink:task_cli_deploy_image_add.html["adicione a imagem ONTAP Select"] para sua instância de Deploy.
+
+. Licença ONTAP Select para uma implantação de produção
++
+Antes de implantar um cluster ONTAP Select em um ambiente de produção, você deve adquirir uma licença de capacidade de armazenamento e baixar o arquivo de licença associado. Você podelink:concept_lic_production.html["licenciar o armazenamento em cada nó"] usando o modelo _Capacity Tiers_ ou licenciando um pool compartilhado usando o modelo _Capacity Pools_.
+
+
+
+
+
+== Etapa 2: Carregar e registrar um arquivo de licença
+
+Após adquirir um arquivo de licença com capacidade de armazenamento, você deve carregar o arquivo contendo a licença na máquina virtual Deploy e registrá-lo.
+
+
+NOTE: Se você estiver implantando um cluster apenas para avaliação, pode pular esta etapa.
+
+.Antes de começar
+Você deve ter a senha da conta de usuário administrador.
+
+.Passos
+. Em um shell de comando na sua estação de trabalho local, use o utilitário sftp para carregar o arquivo de licença na máquina virtual Deploy.
++
+Exemplo de saída
+
++
+....
+sftp admin@10.234.81.101 (provide password when prompted)
+put NLF-320000nnn.txt
+exit
+....
+. Sign in na CLI do utilitário Deploy com a conta de administrador usando SSH.
+. Registre a licença:
++
+[source, cli]
+----
+license add -file-name <file_name>
+----
++
+Forneça a senha da conta de administrador quando solicitado.
+
+. Exiba as licenças no sistema para confirmar se a licença foi adicionada corretamente:
++
+[source, cli]
+----
+license show
+----
+
+
+
+
+== Etapa 3: adicionar hosts do hipervisor
+
+Você deve registrar cada host do hipervisor onde um nó ONTAP Select será executado.
+
+[role="tabbed-block"]
+====
+.KVM
+--
+Você deve registrar um host do hipervisor onde o nó ONTAP Select será executado. Como parte disso, o utilitário de administração Deploy autentica o host KVM.
+
+.Sobre esta tarefa
+Se mais de um host de hipervisor for necessário, use este procedimento para adicionar cada host.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com a conta de administrador.
+. Registre o host:
++
+[source, cli]
+----
+host register -name <FQDN|IP> -hypervisor-type KVM -username <KVM_username>
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+host register -name 10.234.81.14 -hypervisor-type KVM -username root
+----
++
+Forneça a senha da conta do host quando solicitado.
+
+. Exiba o estado do host e confirme se ele está autenticado:
++
+[source, cli]
+----
+host show -name <FQDN|IP> -detailed
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+host show -name 10.234.81.14 -detailed
+----
+
+
+--
+.ESXi
+--
+Como parte disso, o utilitário de administração Deploy autentica no servidor vCenter que gerencia o host ou diretamente no host autônomo ESXi.
+
+.Sobre esta tarefa
+Antes de registrar um host gerenciado pelo vCenter, você precisa adicionar uma conta de servidor de gerenciamento para o servidor vCenter. Se o host não for gerenciado pelo vCenter, você poderá fornecer as credenciais do host durante o registro. Use este procedimento para adicionar cada host.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com a conta de administrador.
+. Se o host for gerenciado por um servidor vCenter, adicione a credencial da conta do vCenter:
++
+[source, cli]
+----
+credential add -hostname <FQDN|IP> -type vcenter -username <vcenter_username>
+----
++
+Exemplo de saída
+
++
+....
+credential add -hostname vc.select.company-demo.com -type vcenter -username administrator@vsphere.local
+....
+. Registre o host:
++
+** Registrar um host autônomo não gerenciado pelo vCenter:
++
+[source, cli]
+----
+host register -name <FQDN|IP> -hypervisor-type ESX -username <esx_username>
+----
+** Registre um host gerenciado pelo vCenter:
++
+[source, cli]
+----
+host register -name <FQDN|IP> -hypervisor-type ESX -mgmt-server <FQDN|IP>
+----
++
+Exemplo de saída
+
++
+....
+host register -name 10.234.81.14 -hypervisor-type ESX -mgmt-server vc.select.company-demo.com
+....
+
+
+. Exiba o estado do host e confirme se ele está autenticado.
++
+[source, cli]
+----
+host show -name <FQDN|IP> -detailed
+----
++
+Exemplo de saída
+
++
+....
+host show -name 10.234.81.14 -detailed
+....
+
+
+--
+====
+
+
+== Etapa 4: criar e configurar um cluster ONTAP Select
+
+Você deve criar e configurar o cluster ONTAP Select . Após a configuração do cluster, você poderá configurar os nós individuais.
+
+.Antes de começar
+Decida quantos nós o cluster contém e tenha as informações de configuração associadas.
+
+.Sobre esta tarefa
+Ao criar um cluster ONTAP Select , o utilitário Deploy gera automaticamente os nomes dos nós com base no nome do cluster e na contagem de nós fornecidos. O Deploy também gera os identificadores exclusivos dos nós.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com a conta de administrador.
+. Crie o cluster:
++
+[source, cli]
+----
+cluster create -name <cluster_name> -node-count <count>
+----
++
+Exemplo de saída
+
++
+....
+cluster create -name test-cluster -node-count 1
+....
+. Configurar o cluster:
++
+[source, cli]
+----
+cluster modify -name <cluster_name> -mgmt-ip <IP_address> -netmask <netmask> -gateway <IP_address> -dns-servers <FQDN|IP>_LIST -dns-domains <domain_list>
+----
++
+Exemplo de saída
+
++
+....
+cluster modify -name test-cluster -mgmt-ip 10.234.81.20 -netmask 255.255.255.192
+-gateway 10.234.81.1 -dns-servers 10.221.220.10 -dnsdomains select.company-demo.com
+....
+. Exibir a configuração e o estado do cluster:
++
+[source, cli]
+----
+cluster show -name <cluster_name> -detailed
+----
+
+
+
+
+== Etapa 5: Configurar um nó ONTAP Select
+
+Você deve configurar cada um dos nós no cluster ONTAP Select .
+
+.Antes de começar
+* Verifique se você tem as informações de configuração do nó.
+* Verifique se o arquivo de licença do Capacity Tier ou do Capacity Pool foi carregado e instalado no utilitário Deploy.
+
+
+.Sobre esta tarefa
+Você deve usar este procedimento para configurar cada nó. Uma licença de Nível de Capacidade é aplicada ao nó neste exemplo.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com a conta de administrador.
+. Determine os nomes atribuídos aos nós do cluster:
++
+[source, cli]
+----
+node show -cluster-name <cluster_name>
+----
+. Selecione o nó e execute a configuração básica:
++
+[source, cli]
+----
+node modify -name <node_name> -cluster-name <cluster_name> -host-name <FQDN|IP> -license-serial-number <number> -instance-type TYPE -passthrough-disks false
+----
++
+Exemplo de saída
+
++
+....
+node modify -name test-cluster-01 -cluster-name test-cluster -host-name 10.234.81.14
+-license-serial-number 320000nnnn -instance-type small -passthrough-disks false
+....
++
+A configuração RAID do nó é indicada com o parâmetro _passthrough-disks_. Se você estiver usando um controlador RAID de hardware local, este valor deverá ser "false". Se estiver usando RAID de software, este valor deverá ser "true".
+
++
+Uma licença Capacity Tier é usada para o nó ONTAP Select .
+
+. Exibir a configuração de rede disponível no host:
++
+[source, cli]
+----
+host network show -host-name <FQDN|IP> -detailed
+----
++
+Exemplo de saída
+
++
+....
+host network show -host-name 10.234.81.14 -detailed
+....
+. Execute a configuração de rede do nó:
++
+[role="tabbed-block"]
+====
+.Host ESXi
+--
+[source, cli]
+----
+node modify -name <node_name> -cluster-name <cluster_name> -mgmt-ip IP -management-networks <network_name> -data-networks <network_name> -internal-network <network_name>
+----
+--
+.Host KVM
+--
+[source, cli]
+----
+node modify -name <node_name> -cluster-name <cluster_name> -mgmt-ip IP -management-vlans <vlan_id> -data-vlans <vlan_id> -internal-vlans <vlad_id>
+----
+--
+====
++
+Ao implantar um cluster de nó único, você não precisa de uma rede interna e deve remover "-internal-network".
+
++
+Exemplo de saída
+
++
+....
+node modify -name test-cluster-01 -cluster-name test-cluster -mgmt-ip 10.234.81.21
+-management-networks sDOT_Network -data-networks sDOT_Network
+....
+. Exibir a configuração do nó:
++
+[source, cli]
+----
+node show -name <node_name> -cluster-name <cluster_name> -detailed
+----
++
+Exemplo de saída
+
++
+....
+node show -name test-cluster-01 -cluster-name test-cluster -detailed
+....
+
+
+
+
+== Etapa 6: anexar armazenamento aos nós ONTAP Select
+
+Configure o armazenamento usado por cada nó no cluster ONTAP Select . Cada nó deve sempre ter pelo menos um pool de armazenamento atribuído. Ao usar RAID por software, cada nó também deve ter pelo menos uma unidade de disco atribuída.
+
+.Antes de começar
+Crie o pool de armazenamento usando o VMware vSphere. Se estiver usando RAID de software, você também precisará de pelo menos uma unidade de disco disponível.
+
+.Sobre esta tarefa
+Ao usar um controlador RAID de hardware local, você precisa executar as etapas de 1 a 4. Ao usar RAID de software, você precisa executar as etapas de 1 a 6.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com as credenciais da conta de administrador.
+. Exibir os pools de armazenamento disponíveis no host:
++
+[source, cli]
+----
+host storage pool show -host-name <FQDN|IP>
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+host storage pool show -host-name 10.234.81.14
+----
++
+Você também pode obter os pools de armazenamento disponíveis por meio do VMware vSphere.
+
+. Anexe um pool de armazenamento disponível ao nó ONTAP Select :
++
+[source, cli]
+----
+node storage pool attach -name <pool_name> -cluster-name <cluster_name> -node-name <node_name> -capacity-limit <limit>
+----
++
+Se você incluir o parâmetro "-capacity-limit", especifique o valor como GB ou TB.
+
++
+Exemplo de saída
+
++
+[listing]
+----
+node storage pool attach -name sDOT-02 -cluster-name test-cluster -
+node-name test-cluster-01 -capacity-limit 500GB
+----
+. Exibir os pools de armazenamento anexados ao nó:
++
+[source, cli]
+----
+node storage pool show -cluster-name <cluster_name> -node-name <node_name>
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+node storage pool show -cluster-name test-cluster -node-name testcluster-01
+----
+. Se você estiver usando RAID de software, conecte a(s) unidade(s) disponível(is):
++
+[source, cli]
+----
+node storage disk attach -node-name <node_name> -cluster-name <cluster_name> -disks <list_of_drives>
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+node storage disk attach -node-name NVME_SN-01 -cluster-name NVME_SN -disks 0000:66:00.0 0000:67:00.0 0000:68:00.0
+----
+. Se você estiver usando RAID de software, exiba os discos conectados ao nó:
++
+[source, cli]
+----
+node storage disk show -node-name <node_name> -cluster-name <cluster_name>`
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+node storage disk show -node-name sdot-smicro-009a -cluster-name NVME
+----
+
+
+
+
+== Etapa 7: implantar um cluster ONTAP Select
+
+Depois que o cluster e os nós forem configurados, você poderá implantar o cluster.
+
+.Antes de começar
+Execute o verificador de conectividade de rede usando olink:task_adm_connectivity.html["interface da web"] ou olink:task_cli_connectivity.html["CLI"] Para confirmar a conectividade entre os nós do cluster na rede interna.
+
+.Passos
+. Sign in na CLI do utilitário Deploy usando SSH com a conta de administrador.
+. Implante o cluster ONTAP Select :
++
+[source, cli]
+----
+cluster deploy -name <cluster_name>
+----
++
+Exemplo de saída
+
++
+[listing]
+----
+cluster deploy -name test-cluster
+----
++
+Forneça a senha a ser usada para a conta de administrador do ONTAP quando solicitado.
+
+. Exiba o status do cluster para determinar quando ele foi implantado com sucesso:
++
+[source, cli]
+----
+cluster show -name <cluster_name>
+----
+
+
+.O que vem a seguir?
+link:task_cli_clusters.html["Faça backup dos dados de configuração do ONTAP Select Deploy."].

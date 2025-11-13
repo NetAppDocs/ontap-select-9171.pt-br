@@ -1,0 +1,138 @@
+---
+sidebar: sidebar 
+permalink: reference_plan_ots_hardware.html 
+keywords: plan, planning, vmware, hardware, hardware requirements 
+summary: Há vários requisitos de hardware e questões de planejamento que você deve considerar relacionados ao ambiente VMware. 
+---
+= Considerações sobre o hipervisor e hardware do ONTAP Select VMware
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Há vários requisitos de hardware e questões de planejamento que você deve considerar relacionados ao ambiente VMware.
+
+
+
+== Requisitos do hipervisor
+
+Há vários requisitos relacionados ao hipervisor onde o ONTAP Select é executado.
+
+
+NOTE: Você deve revisar olink:reference_release_notes.html["Notas de versão do ONTAP Select"] para quaisquer outras restrições ou limitações conhecidas.
+
+
+
+=== Licenciamento VMware
+
+Para implantar um cluster ONTAP Select , sua organização precisa ter uma licença válida do VMware vSphere para os hosts do hipervisor onde o ONTAP Select é executado. Você deve usar as licenças apropriadas para sua implantação.
+
+
+
+=== Compatibilidade de software
+
+Você pode implantar o ONTAP Select em hipervisores KVM e ESXi.
+
+[role="tabbed-block"]
+====
+.KVM
+--
+O ONTAP Select oferece suporte às seguintes versões do hipervisor KVM:
+
+* KVM no Red Hat Enterprise Linux 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6
+* KVM no Rocky Linux 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6
+
+
+--
+.ESXi
+--
+O ONTAP Select oferece suporte às seguintes versões do hipervisor ESXi:
+
+* VMware ESXi 9.0
+* VMware ESXi 8.0 U3
+* VMware ESXi 8.0 U2
+* VMware ESXi 8.0 U1 (compilação 21495797)
+* VMware ESXi 8.0 GA (compilação 20513097)
+* VMware ESXi 7.0 GA (compilação 15843807 ou superior), incluindo 7.0 U3C, U2 e U1
+
+
+
+NOTE: O NetApp oferece suporte ao ONTAP Select nas versões identificadas do ESXi, desde que a VMware também continue a oferecer suporte às mesmas versões.
+
+
+NOTE: O ESXi 6.5 GA e o ESXi 6.7 GA atingiram o fim do status de disponibilidade. Se você possui clusters ONTAP Select com essas versões, é necessário atualizar para as versões compatíveis, conforme indicado em https://mysupport.netapp.com/matrix["Ferramenta de Matriz de Interoperabilidade (IMT)"^] .
+
+--
+====
+
+
+=== VMware vCenter e hosts ESXi autônomos
+
+Se um host do hipervisor ESXi for gerenciado por um servidor vCenter, você deverá registrá-lo no utilitário de administração de implantação usando as credenciais do vCenter. Não é possível registrar o host como um host autônomo usando as credenciais do ESXi.
+
+
+
+== Requisitos de hardware principais
+
+O host do hipervisor físico onde você implanta o ONTAP Select deve atender a diversos requisitos de hardware. Você pode escolher qualquer plataforma para o host do hipervisor, desde que ela atenda aos requisitos mínimos de hardware. Os seguintes fornecedores oferecem plataformas de hardware compatíveis: Cisco, Dell, HP, Fujitsu, Lenovo e Supermicro.
+
+
+NOTE: A partir da versão 9.9.1 do ONTAP Select , somente os modelos de CPU baseados em Intel Xeon Sandy Bridge ou posteriores são suportados.
+
+Consulte o https://mysupport.netapp.com/matrix["Ferramenta de Matriz de Interoperabilidade,window=_blank"] Para obter mais informações.
+
+
+
+=== Requisitos básicos de hardware
+
+Existem vários requisitos comuns de hardware que se aplicam a todas as plataformas, independentemente do tipo de instância do nó ou da oferta de licença.
+
+.Processador
+Os microprocessadores suportados incluem processadores Intel Xeon para servidores, consultelink:https://www.intel.com/content/www/us/en/products/processors/xeon/view-all.html?Processor+Type=1003["Processadores Intel Xeon,window=_blank"] Para obter mais informações.
+
+
+NOTE: Os processadores Advanced Micro Devices (AMD) não são suportados pelo ONTAP Select.
+
+.Configuração Ethernet
+Há várias configurações Ethernet suportadas com base no tamanho do cluster.
+
+[cols="2,3,3"]
+|===
+| Tamanho do cluster | Requisitos mínimos | Requisitos recomendados 
+
+
+| Cluster de nó único | 2 x 1GbE | 2 x 10GbE 
+
+
+| Cluster de dois nós ou MetroCluster SDS | 4 x 1GbE ou 1 x 10GbE | 2 x 10GbE 
+
+
+| Cluster de quatro, seis ou oito nós | 2 x 10GbE | 4 x 10GbE ou 2 x 25/40GbE 
+|===
+
+
+=== Requisitos adicionais de hardware com base no tipo de instância
+
+Há vários requisitos de hardware adicionais com base no tipo de instância do nó.
+
+Consultelink:concept_lic_platforms.html["Entenda as ofertas de licenças de plataforma"] para mais informações.
+
+[cols="a1,a2,a2,a2"]
+|===
+| Tamanho do nó | núcleos de CPU | Memória | Oferta de licença de plataforma necessária 
+
+
+| Pequeno | Seis núcleos físicos ou mais, com quatro reservados para o ONTAP Select | 24 GB ou mais, com 16 GB reservados para ONTAP Select | Padrão, premium ou premium XL 
+
+
+| Médio | Dez núcleos físicos ou mais, com oito reservados para o ONTAP Select | 72 GB ou mais, com 64 GB reservados para ONTAP Select | Premium ou Premium XL 
+
+
+| Grande | Dezoito núcleos físicos ou mais, com dezesseis reservados para o ONTAP Select | 136 GB ou mais, com 128 GB reservados para ONTAP Select | Premium XL 
+|===
+
+NOTE: Há requisitos de disco adicionais com base na licença da plataforma. Verlink:reference_plan_ots_storage.html["Armazenamento e RAID"] para mais informações.

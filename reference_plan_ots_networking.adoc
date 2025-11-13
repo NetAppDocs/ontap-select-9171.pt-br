@@ -1,0 +1,166 @@
+---
+sidebar: sidebar 
+permalink: reference_plan_ots_networking.html 
+keywords: plan, planning, networking, network, drivers, vmxnet3, cluster mtu, firewall 
+summary: Você deve configurar a rede do hipervisor corretamente antes de implantar o ONTAP Select. 
+---
+= Considerações sobre a rede ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você deve configurar a rede do hipervisor corretamente antes de implantar o ONTAP Select.
+
+
+
+== Opções de switch virtual
+
+Você deve configurar um switch virtual em cada um dos hosts ONTAP Select para oferecer suporte à rede externa e à rede interna (somente clusters multinós). Como parte da implantação de um cluster multinós, você deve testar a conectividade de rede na rede do cluster interno.
+
+
+NOTE: Para saber mais sobre como configurar um vSwitch em um host de hipervisor e sobre o recurso de interface de alta velocidade, consulte olink:concept_nw_concepts_chars.html["Rede de mergulho profundo"] seção.
+
+
+
+== Atualizar para VMXNET3 (somente ESXi)
+
+A partir do ONTAP Select 9.5 com o Deploy 2.10, o VMXNET3 é o driver de rede padrão incluído em novas implantações de cluster no VMware ESXi. Se você atualizar um nó ONTAP Select mais antigo para a versão 9.5 ou posterior, o driver não será atualizado automaticamente.
+
+
+
+== MTU de cluster
+
+Uma rede interna separada é usada para conectar os nós do ONTAP Select em um cluster multinós. Normalmente, o tamanho da MTU para essa rede é de 9000 bytes. No entanto, há situações em que esse tamanho de MTU é muito grande para a rede que conecta os nós do ONTAP Select . Para acomodar os quadros menores, o tamanho da MTU usado pelo ONTAP Select na rede interna pode estar na faixa de 7500 a 9000 bytes.
+
+O tamanho da MTU é exibido na seção Detalhes do Cluster da página de criação do cluster. O valor é determinado pelo utilitário de administração de implantação da seguinte forma:
+
+. Padrão inicial de 9000.
+. À medida que você adiciona os hosts e as redes para os pares de HA, o valor da MTU é reduzido conforme necessário, com base na configuração dos vSwitches na rede.
+. O valor final da MTU do cluster é definido depois que você adiciona todos os pares de HA e está pronto para criar o cluster.
+
+
+
+NOTE: Você pode definir manualmente o valor da MTU do cluster, se necessário, com base no design da sua rede.
+
+
+
+== Host com duas placas de rede com vSwitch padrão (somente ESXi)
+
+Para melhorar o desempenho do ONTAP Select em uma configuração com duas placas de rede, você deve isolar o tráfego de rede interno e externo usando dois grupos de portas. Esta recomendação se aplica à seguinte configuração específica:
+
+* ONTAP Select
+* Duas NICs (NIC1 e NIC2)
+* vSwitch padrão
+
+
+Neste ambiente, você deve configurar o tráfego usando dois grupos de portas da seguinte maneira:
+
+.Grupo portuário 1
+* Rede interna (cluster, RSM, tráfego HA-IC)
+* NIC1 está ativo
+* NIC2 em espera
+
+
+.Grupo portuário 2
+* Rede externa (tráfego de dados e gerenciamento)
+* NIC1 está em espera
+* NIC2 em ativo
+
+
+Veja olink:concept_nw_concepts_chars.html["Rede de mergulho profundo"] Para obter mais informações sobre implantações com duas placas de rede (NICs), consulte a seção correspondente.
+
+
+
+== Host de quatro NICs com vSwitch padrão (somente ESXi)
+
+Para melhorar o desempenho do ONTAP Select em uma configuração de quatro NICs, você deve isolar o tráfego de rede interno e externo usando quatro grupos de portas. Esta recomendação se aplica à seguinte configuração específica:
+
+* ONTAP Select
+* Quatro NICs (NIC1, NIC2, NIC3 e NIC4)
+* vSwitch padrão
+
+
+Neste ambiente, você deve configurar o tráfego usando quatro grupos de portas da seguinte maneira:
+
+.Grupo portuário 1
+* Rede interna (cluster, tráfego RSM)
+* NIC1 está ativo
+* NIC2, NIC3, NIC4 em espera
+
+
+.Grupo portuário 2
+* Rede interna (cluster, tráfego HA-IC)
+* NIC3 está ativo
+* NIC1, NIC2, NIC4 em espera
+
+
+.Grupo portuário 3
+* Rede externa (tráfego de dados e gerenciamento)
+* NIC2 está ativo
+* NIC1, NIC3, NIC4 em espera
+
+
+.Grupo portuário 4
+* Rede externa (tráfego de dados)
+* NIC4 está ativo
+* NIC1, NIC2, NIC3 em espera
+
+
+Veja olink:concept_nw_concepts_chars.html["Rede de mergulho profundo"] Para obter mais informações sobre implantações com quatro placas de rede (NICs), consulte a seção correspondente.
+
+
+
+== Requisitos de tráfego de rede
+
+Você deve certificar-se de que seus firewalls estejam configurados corretamente para permitir que o tráfego de rede flua entre os vários participantes em um ambiente de implantação do ONTAP Select .
+
+.Participantes
+Há vários participantes ou entidades que trocam tráfego de rede como parte de uma implantação do ONTAP Select . Eles são apresentados e, em seguida, utilizados na descrição resumida dos requisitos de tráfego de rede.
+
+* Implantar ONTAP Select Implantar utilitário de administração
+* vSphere (somente ESXi) Um servidor vSphere ou um host ESXi, dependendo de como o host é gerenciado na implantação do cluster
+* Servidor hipervisor Host hipervisor ESXi ou host Linux KVM
+* Nó OTS Um nó ONTAP Select
+* Cluster OTS Um cluster ONTAP Select
+* Admin WS Estação de trabalho administrativa local
+
+
+.Resumo dos requisitos de tráfego de rede
+A tabela a seguir descreve os requisitos de tráfego de rede para uma implantação do ONTAP Select .
+
+[cols="20,20,35,25"]
+|===
+| Protocolo / Porta | ESXi / KVM | Direção | Descrição 
+
+
+| TLS (443) | ESXi | Implantar no servidor vCenter (gerenciado) ou ESXi (gerenciado ou não gerenciado) | API VMware VIX 
+
+
+| 902 | ESXi | Implantar no servidor vCenter (gerenciado) ou ESXi (não gerenciado) | API VMware VIX 
+
+
+| ICMP | ESXi ou KVM | Implantar no servidor do hipervisor | Ping 
+
+
+| ICMP | ESXi ou KVM | Implantar em cada nó OTS | Ping 
+
+
+| SSH (22) | ESXi ou KVM | Admin WS para cada nó OTS | Administração 
+
+
+| SSH (22) | KVM | Implantar em nós do servidor do hipervisor | Servidor de hipervisor de acesso 
+
+
+| TLS (443) | ESXi ou KVM | Implantar em nós e clusters OTS | Acesso ONTAP 
+
+
+| TLS (443) | ESXi ou KVM | Cada nó OTS a ser implantado | Implantação de acesso (licenciamento de pools de capacidade) 
+
+
+| iSCSI (3260) | ESXi ou KVM | Cada nó OTS a ser implantado | Disco de mediador/caixa de correio 
+|===

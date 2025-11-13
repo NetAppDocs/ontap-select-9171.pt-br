@@ -1,0 +1,133 @@
+---
+sidebar: sidebar 
+permalink: reference_plan_dep_general.html 
+keywords: plan, planning, ontap select deploy, general requirements 
+summary: Há vários requisitos gerais que você deve considerar como parte do planejamento da instalação do utilitário de administração ONTAP Select Deploy. 
+---
+= Requisitos gerais e planejamento do ONTAP Select Deploy
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Há vários requisitos gerais que você deve considerar como parte do planejamento da instalação do utilitário de administração ONTAP Select Deploy.
+
+
+
+== Emparelhando o utilitário Deploy com os clusters ONTAP Select
+
+Você tem várias opções ao emparelhar uma instância do utilitário Deploy com os clusters ONTAP Select .
+
+
+NOTE: Em todos os cenários de implantação, um único cluster ONTAP Select e os nós no cluster podem ser gerenciados por apenas uma instância do utilitário de administração Deploy. Um cluster não pode ser gerenciado por duas ou mais instâncias diferentes do utilitário Deploy.
+
+.Uma instância do utilitário para cada cluster ONTAP Select
+Você pode implantar e gerenciar cada cluster ONTAP Select usando uma instância dedicada do utilitário Deploy. Com essa configuração um-para-um, há uma separação clara entre cada um dos pares utilitário-cluster. Essa configuração proporciona um alto nível de isolamento com domínios de falha menores.
+
+.Uma instância do utilitário para vários clusters ONTAP Select
+Você pode implantar e gerenciar vários clusters ONTAP Select na sua organização usando uma única instância do utilitário Deploy. Com essa configuração um-para-muitos, todos os dados de processamento e configuração são gerenciados pela mesma instância do utilitário Deploy.
+
+
+NOTE: Uma instância do utilitário Deploy pode administrar até 400 nós ONTAP Select ou 100 clusters.
+
+
+
+== Requisitos relacionados ao ambiente KVM
+
+Antes de instalar o utilitário de administração Deploy em um ambiente de hipervisor KVM, você deve revisar os requisitos básicos e se preparar para a implantação.
+
+.Requisitos e restrições para uma implantação
+Há vários requisitos e restrições que você deve considerar ao instalar o utilitário ONTAP Select Deploy em um ambiente KVM.
+
+.Requisitos de hardware do servidor host KVM Linux
+Existem vários requisitos mínimos de recursos que o seu host do hipervisor KVM Linux deve atender. Verifique se os hosts onde o ONTAP Select está implantado atendem aos seguintes requisitos básicos:
+
+* Servidor Linux:
++
+** O hardware e o software devem ser de 64 bits
+** O servidor deve aderir às mesmas versões suportadas definidas para um nó ONTAP Select
+
+
+* CPUs virtuais (2)
+* Memória virtual (4 GB)
+* Armazenamento (40 GB)
+* "O Protocolo de Configuração Dinâmica de Hosts (DHCP) está habilitado (você também pode atribuir um endereço IP estático)
+
+
+.Conectividade de rede
+Verifique se a interface de rede da máquina virtual Deploy está configurada e pode se conectar aos hosts ONTAP Select que ela gerencia.
+
+.Suporte para IP versão 4
+O ONTAP Select Deploy suporta apenas a versão 4 do IP (IPv4). A versão 6 do IP (IPv6) não é suportada. Essa restrição afeta o ONTAP Select das seguintes maneiras:
+
+* Você deve atribuir um endereço IPv4 ao LIF de gerenciamento da VM de implantação.
+* O Deploy não pode criar nós ONTAP Select configurados para usar IPv6 nos LIFs ONTAP .
+
+
+
+
+== Informações de configuração necessárias
+
+Como parte do seu planejamento de implantação, você deve determinar as informações de configuração necessárias antes de instalar o utilitário de administração ONTAP Select Deploy.
+
+.Nome da VM de implantação
+O nome a ser usado para a VM.
+
+.Nome do host KVM Linux
+O host Linux KVM onde o utilitário Deploy está instalado.
+
+.Nome do pool de armazenamento
+O pool de armazenamento que contém os arquivos da VM (aproximadamente 40 GB são necessários).
+
+.Rede para a VM
+A rede onde a VM de implantação está conectada.
+
+
+
+== Informações opcionais de configuração de rede
+
+A VM de implantação é configurada usando DHCP por padrão. No entanto, se necessário, você pode configurar manualmente a interface de rede para a VM.
+
+.Nome do host
+O nome do host.
+
+.Endereço IP do host
+O endereço IPv4 estático.
+
+.Máscara de sub-rede
+A máscara de sub-rede, que é baseada na rede da qual a VM faz parte.
+
+.Portal
+O gateway ou roteador padrão.
+
+.Servidor DNS primário
+O servidor de nome de domínio primário.
+
+.Servidor DNS secundário
+O servidor de nomes de domínio secundário.
+
+.Domínios de pesquisa
+Os domínios de pesquisa a serem usados.
+
+
+
+== Autenticação usando o armazenamento de credenciais
+
+O repositório de credenciais do ONTAP Select Deploy é um banco de dados que contém informações da conta. O Deploy usa as credenciais da conta para realizar a autenticação do host como parte da criação e do gerenciamento do cluster. Você deve estar ciente de como o repositório de credenciais é usado ao planejar uma implantação do ONTAP Select .
+
+
+NOTE: As informações da conta são armazenadas com segurança no banco de dados usando o algoritmo de criptografia AES e o algoritmo de hash SHA-256.
+
+.Tipos de credenciais
+Os seguintes tipos de credenciais são suportados:
+
+* Host Usado para autenticar um host do hipervisor como parte da implantação de um nó ONTAP Select diretamente no VMware ESXi
+* vCenter Usado para autenticar um servidor vCenter como parte da implantação de um nó ONTAP Select no ESXi quando o host é gerenciado pelo VMware vCenter
+
+
+.Acesso
+O repositório de credenciais é acessado internamente como parte da execução de tarefas administrativas normais usando o Deploy, como adicionar um host de hipervisor. Você também pode gerenciar o repositório de credenciais diretamente pela interface de usuário web e CLI do Deploy.

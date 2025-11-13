@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: task_cli_signing_in.html 
+keywords: administer, administering, cli, deploy, sign in, signing in 
+summary: Você precisa fazer login no shell de gerenciamento do Deploy usando SSH. Após o login, você pode emitir comandos CLI para criar um cluster ONTAP Select e executar os procedimentos administrativos relacionados. 
+---
+= Sign in no ONTAP Select Implantar usando SSH
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você precisa fazer login no shell de gerenciamento do Deploy usando SSH. Após o login, você pode emitir comandos CLI para criar um cluster ONTAP Select e executar os procedimentos administrativos relacionados.
+
+.Antes de começar
+Você precisa ter a senha atual da conta de administrador do Deploy (admin). Se estiver fazendo login pela primeira vez e usando o vCenter para instalar a máquina virtual do Deploy, use a senha definida durante a instalação.
+
+.Passos
+. Sign in usando a conta de administrador e o endereço IP de gerenciamento da máquina virtual Deploy; por exemplo:
++
+`ssh admin@<10.235.82.22>`
+
+. Se esta for a primeira vez que você faz login e você não instalou o Deploy usando o assistente disponível com o vCenter, forneça as seguintes informações de configuração quando solicitado:
++
+** Nova senha para a conta de administrador (obrigatório)
+** Nome da empresa (obrigatório)
+** URL do proxy (opcional)
+
+
+. Digite *?* e pressione *Enter* para exibir uma lista dos comandos de shell de gerenciamento disponíveis.
+

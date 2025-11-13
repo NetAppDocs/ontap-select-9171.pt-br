@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: task_lic_acquire_ct.html 
+keywords: license, licensing, acquire, Capacity Tiers 
+summary: Ao utilizar o licenciamento por Níveis de Capacidade, você precisa adquirir um arquivo de licença para cada nó do ONTAP Select . O arquivo de licença define a capacidade de armazenamento do nó e é vinculado a ele por meio do número de série exclusivo de nove dígitos atribuído pela NetApp. 
+---
+= Adquira uma licença ONTAP Select Capacity Tier
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Ao utilizar o licenciamento por Níveis de Capacidade, você precisa adquirir um arquivo de licença para cada nó do ONTAP Select . O arquivo de licença define a capacidade de armazenamento do nó e é vinculado a ele por meio do número de série exclusivo de nove dígitos atribuído pela NetApp.
+
+.Antes de começar
+Você deve ter o número de série da licença de nove dígitos atribuído ao nó pela NetApp. Antes de tentar adquirir um arquivo de licença, aguarde pelo menos 24 horas após a data de envio do seu pedido de compra.
+
+.Sobre esta tarefa
+Você deve executar esta tarefa para cada nó do ONTAP Select que requer uma licença Capacity Tier.
+
+.Passos
+. Acesse o site da licença ONTAP Select usando um navegador da web:
++
+`https://register.netapp.com/register/getlicensefile`
+
+. Sign in usando as credenciais da sua conta NetApp .
+. Na página *Gerador de Licenças*, selecione a oferta de licença desejada na caixa suspensa.
+. Preencha os campos restantes na mesma página, incluindo o *Número de série do produto*, que é o número de série do nó ONTAP Select .
+. Clique em *Enviar*.
+. Após a solicitação ser validada, selecione o método de entrega da licença.
++
+Você pode clicar em *Baixar licença* ou *Enviar licença por e-mail*.
+
+. Confirme se você recebeu o arquivo de licença com base no método de entrega selecionado.
+
+
+.Depois que você terminar
+Você deve carregar o arquivo de licença no utilitário de administração Deploy antes que ele possa ser aplicado a um nó ONTAP Select .

@@ -1,0 +1,128 @@
+---
+sidebar: sidebar 
+permalink: esxi-host-configuration-and-preparation-checklist.html 
+keywords: ontap select, pre-installation checklist, esxi, host preparation 
+summary: Prepare cada host do hipervisor ESXi onde um nó ONTAP Select está implantado. Ao preparar os hosts, avalie cuidadosamente o ambiente de implantação para garantir que eles estejam configurados corretamente e prontos para suportar a implantação de um cluster ONTAP Select . 
+---
+= Lista de verificação de configuração e preparação do host ESXi para ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Prepare cada host do hipervisor ESXi onde um nó ONTAP Select será implantado. Ao preparar os hosts, avalie cuidadosamente o ambiente de implantação para garantir que eles estejam configurados corretamente e prontos para suportar a implantação de um cluster ONTAP Select .
+
+
+NOTE: O utilitário de administração ONTAP Select Deploy não realiza a configuração de rede e armazenamento necessária dos hosts do hipervisor. Você deve preparar manualmente cada host antes de implantar um cluster ONTAP Select .
+
+
+
+== Etapa 1: preparar o host do hipervisor ESXi
+
+Verifique a configuração do host ESXi e as portas do firewall.
+
+.Passos
+. Verifique se cada ESXi está configurado com o seguinte:
++
+** Um hipervisor pré-instalado e com suporte
+** Uma licença VMware vSphere
+
+
+. Verifique se o mesmo servidor vCenter pode gerenciar todos os hosts onde um nó ONTAP Select está implantado no cluster.
+. Verifique se as portas do firewall estão configuradas para permitir acesso ao vSphere. Essas portas devem estar abertas para oferecer suporte à conectividade serial com as máquinas virtuais ONTAP Select .
++
+[role="tabbed-block"]
+====
+.Recomendado
+--
+A NetApp recomenda que você abra as seguintes portas de firewall para permitir acesso ao vSphere:
+
+** Portas 7200 – 7400 (tráfego de entrada e saída)
+
+
+--
+.Padrão
+--
+Por padrão, o VMware permite acesso nas seguintes portas:
+
+** Porta 22 e portas 1024 – 65535 (tráfego de entrada)
+** Portas 0 – 65535 (tráfego de saída)
+
+
+--
+====
++
+Para mais informações, consulte olink:https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-security-8-0/securing-esxi-hosts/customizing-hosts-with-the-security-profile/esxi-firewall-configuration.html["Documentação do Broadcom VMware vSphere"^] .
+
+. Familiarize-se com os direitos do vCenter necessários. Verlink:reference_plan_ots_vcenter.html["Servidor VMware vCenter"] para mais informações.
+
+
+
+
+== Etapa 2: Revise a configuração do cluster ONTAP Select
+
+Você pode implantar o ONTAP Select como um cluster de vários nós ou de um único nó. Em muitos casos, um cluster de vários nós é preferível devido à capacidade de armazenamento adicional e à alta disponibilidade (HA).
+
+As figuras a seguir ilustram as redes ONTAP Select usadas com um cluster de nó único e um cluster de quatro nós.
+
+[role="tabbed-block"]
+====
+.Cluster de nó único
+--
+A figura a seguir ilustra um cluster de nó único. A rede externa transporta tráfego de cliente, gerenciamento e replicação entre clusters (SnapMirror/ SnapVault).
+
+image:CHK_01.jpg["Cluster de nó único mostrando uma rede"]
+
+--
+.Cluster de quatro nós
+--
+A figura a seguir ilustra um cluster de quatro nós mostrando duas redes. A rede interna permite a comunicação entre os nós em suporte aos serviços de rede do cluster ONTAP . A rede externa transporta tráfego de cliente, gerenciamento e replicação entre clusters (SnapMirror/ SnapVault).
+
+image:CHK_02.jpg["Cluster de quatro nós mostrando duas redes"]
+
+--
+.Nó único dentro de um cluster de quatro nós
+--
+A figura a seguir ilustra a configuração de rede típica para uma única máquina virtual ONTAP Select em um cluster de quatro nós. Há duas redes distintas: ONTAP- interna e ONTAP- externa.
+
+image:CHK_03.jpg["Nó único dentro de um cluster de quatro nós"]
+
+--
+====
+
+
+== Etapa 3: Configurar o Open vSwitch
+
+O vSwitch é o componente principal do hipervisor usado para oferecer suporte à conectividade das redes internas e externas. Há vários aspectos que você deve considerar ao configurar cada vSwitch do hipervisor.
+
+As etapas a seguir são para uma configuração do vSwitch para um host ESXi com duas portas físicas (2x10Gb) em um ambiente de rede típico.
+
+.Passos
+. link:concept_nw_vsphere_vswitch_config.html["Configurar um vSwitch e atribuir ambas as portas ao vSwitch"].
+. link:concept_nw_vsphere_vswitch_config.html["Crie uma equipe NIC usando as duas portas"].
+. Defina a política de balanceamento de carga como “Rota com base no ID da porta virtual de origem”.
+. Marque ambos os adaptadores como “ativos” ou marque um adaptador como “ativo” e o outro como “em espera”.
+. Defina a configuração “Failback” como “Sim”.
++
+image:CHK_04.jpg["Propriedades do vSwitch)"]
+
+. Configure o vSwitch para usar quadros jumbo (9000 MTU).
+. Configure um grupo de portas no vSwitch para o tráfego interno (ONTAP-internal):
++
+** O grupo de portas é atribuído aos adaptadores de rede virtuais ONTAP Select e0c-e0g usados para o cluster, interconexão HA e tráfego de espelhamento.
+** O grupo de portas deve estar em uma VLAN não roteável, pois espera-se que a rede seja privada. Você deve adicionar a tag de VLAN apropriada ao grupo de portas para levar isso em consideração.
+** As configurações de balanceamento de carga, failback e ordem de failover do grupo de portas devem ser as mesmas do vSwitch.
+
+
+. Configure um grupo de portas no vSwitch para o tráfego externo (ONTAP-external):
++
+** O grupo de portas é atribuído aos adaptadores de rede virtuais ONTAP Select e0a-e0c usados para tráfego de dados e gerenciamento.
+** O grupo de portas pode estar em uma VLAN roteável. Dependendo do ambiente de rede, você também deve adicionar uma tag de VLAN apropriada ou configurar o grupo de portas para entroncamento de VLAN.
+** As configurações de balanceamento de carga, failback e ordem de failover do grupo de portas devem ser as mesmas do vSwitch.
+
+
+

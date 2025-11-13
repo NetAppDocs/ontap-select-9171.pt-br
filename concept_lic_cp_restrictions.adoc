@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_restrictions.html 
+keywords: license, licensing, Capacity Pools, restrictions 
+summary: As restrições que se aplicam ao usar o modelo de licenciamento Capacity Pool são apresentadas abaixo. 
+---
+= Restrições de implantação para licenciamento de pools de capacidade ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+As restrições que se aplicam ao usar o modelo de licenciamento Capacity Pool são apresentadas abaixo.
+
+.Modelo de licenciamento consistente por cluster
+Todos os nós dentro de um único cluster ONTAP Select devem usar o mesmo modelo de licenciamento, seja por Níveis de Capacidade ou por Pools de Capacidade. Não é possível misturar os tipos de licenciamento para os nós dentro de um único cluster.
+
+.Todos os nós em um cluster usam a mesma instância do License Manager
+Todos os nós com uma licença de Pool de Capacidade em um cluster ONTAP Select devem usar a mesma instância do Gerenciador de Licenças. Como há uma instância do Gerenciador de Licenças em cada instância de Implantação, essa restrição reafirma o requisito existente de que todos os nós em um cluster devem ser gerenciados pela mesma instância de Implantação.
+
+.Um pool de capacidade por nó
+Cada nó pode alugar armazenamento de exatamente um Pool de Capacidade. Um nó não pode usar dois ou mais pools.
+
+.Mesmo pool para nós em um par HA
+Ambos os nós em um único par de HA devem alugar armazenamento do mesmo Pool de Capacidade. No entanto, diferentes pares de HA dentro do mesmo cluster podem alugar armazenamento de pools diferentes gerenciados pelo mesmo Gerenciador de Licenças.
+
+.Duração da licença de armazenamento
+Você deve escolher a duração da licença ao adquirir a licença de armazenamento da NetApp. Por exemplo, uma licença pode ser válida por um ano.
+
+.Duração do arrendamento de dados agregados
+Quando um nó ONTAP Select solicita um arrendamento de armazenamento para um agregado de dados, o Gerenciador de Licenças fornece um arrendamento por um período específico, com base na configuração do Pool de Capacidade. Você pode configurar a duração do arrendamento para cada pool entre uma hora e sete dias. A duração padrão do arrendamento é de 24 horas.
+
+.Endereço IP estático atribuído para implantar
+Você deve atribuir um endereço IP estático ao utilitário de administração de implantação quando o licenciamento de pools de capacidade for usado.
