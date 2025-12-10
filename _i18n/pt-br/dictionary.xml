@@ -653,7 +653,6 @@
   <block id="9295b1d52d6b9b34b829dfb4fabf6d05" category="cell">Suporte a hipervisor (VMware)</block>
   <block id="7b5019dce3bb835acb62c31388f47aef" category="cell">VMware vSphere 9.0, VMware vSphere 8.0GA e atualizações 1 a 3, VMware vSphere 7.0GA e atualizações 1 a 3C</block>
   <block id="4f17c009683074f845007741fa1c26dd" category="cell">Suporte a hipervisor (KVM)</block>
-  <block id="1a847c26edb3f3d6892cfa25198b2272" category="cell">Red Hat Enterprise Linux 64 bits (KVM) 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6 Rocky Linux (KVM) 9.6 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
   <block id="049f7d1a5b523b8230ca21c727474d11" category="cell">Software de gestão</block>
   <block id="f1680d42c94acc804fddda46a7e4602d" category="cell">Conjunto de gerenciamento NetApp Active IQ Unified Manager ONTAP Select Deploy Utility SnapCenter (opcional)</block>
   <block id="bbf6609978bbf45921ea0dae059fde72" category="inline-link-macro">Saiba mais sobre os tipos de licença Capacity Tier e Capacity Pool</block>
@@ -2225,7 +2224,6 @@
   <block id="47a73413b58dd69883b3d5bfcaf3ae17" category="list-text">A partir do ONTAP Select 9.17.1, o driver de dispositivo FreeBSD NDA (NVMe Direct Access) substitui o NVD (NVMe Express Disk Driver). O driver FreeBSD oferece suporte para dispositivos de acesso direto implementando o protocolo de comando NVMe. Ao implantar um cluster ONTAP Select 9.17.1 ou atualizar um cluster ONTAP Select existente para a versão 9.17.1, o driver FreeBSD é iniciado por padrão ao configurar os dispositivos NVMe.</block>
   <block id="9fe4db073ef9cb1070ea002413806d7b" category="paragraph">Para o ONTAP Select 9.16.1 e versões anteriores, o NVD continua a fornecer suporte para dispositivos NVMe na sua implantação do ONTAP Select .</block>
   <block id="f588ddb32cd79889160082356416d2f3" category="list-text">Suporte atualizado ao hipervisor KVM</block>
-  <block id="4d4e935615049b9792b8ee30fa5c71d3" category="list-text">A partir do ONTAP Select 9.17.1, o hipervisor KVM é compatível com o Red Hat Enterprise Linux (RHEL) 9.6 e o Rocky Linux 9.6.</block>
   <block id="aacb1ad8ec74092a13074108a4e20c02" category="list-text">Suporte aprimorado ao VMware ESXi</block>
   <block id="d4859de543e918748cbd58f23dedb243" category="list-text">O ONTAP Select 9.17.1 inclui suporte para VMware ESXi 9.0.</block>
   <block id="fa9e744025392ca74a15477f1e137192" category="section-title">ONTAP Select 9.16.1</block>
@@ -2536,8 +2534,6 @@
   <block id="da132c60d8df0a4756d0a1e64618decf" category="section-title">Compatibilidade de software</block>
   <block id="b819d70810100dd612c72123ee67224d" category="paragraph">Você pode implantar o ONTAP Select em hipervisores KVM e ESXi.</block>
   <block id="5c4913dc2f0c23f4a31e20e72374ec36" category="paragraph">O ONTAP Select oferece suporte às seguintes versões do hipervisor KVM:</block>
-  <block id="106afc8ef14315f6a60e49c2f0227fcf" category="list-text">KVM no Red Hat Enterprise Linux 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
-  <block id="b2270c4043a2f0c3e82238730523c1bd" category="list-text">KVM no Rocky Linux 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
   <block id="88f7643f9d6082d2e385207946c3b5a2" category="paragraph">O ONTAP Select oferece suporte às seguintes versões do hipervisor ESXi:</block>
   <block id="7f5595345c6056e02963d53a9b039144" category="list-text">VMware ESXi 9.0</block>
   <block id="834b02e64c437c938996a121579bbd87" category="list-text">VMware ESXi 8.0 U3</block>
@@ -3268,8 +3264,6 @@
   <block id="f151466e45805b85c179d53c716d1730" category="paragraph">O ESXi é compatível com as seguintes versões do hipervisor:</block>
   <block id="938bda7b4f477005ecd5a1be655a2d94" category="list-text">VMware ESXi 7.0 GA (compilação 15843807 ou superior), incluindo 7.0 U1, U2 e U3C</block>
   <block id="b9f88b3e1ffa6ae7d67f237344be95ad" category="paragraph">O KVM é suportado nas seguintes versões do hipervisor:</block>
-  <block id="94df876ea98d3d9e82f501c53ff28527" category="list-text">Red Hat Enterprise Linux 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
-  <block id="9fed076770017e73835f398d2e5b8714" category="list-text">Rocky Linux 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
   <block id="a811207ba17996dc78a58667cd177a13" category="inline-link-macro">lista de verificação de preparação do anfitrião</block>
   <block id="3f47eb1c93cfecc035015d51dea43351" category="inline-link-macro">instalação do utilitário de implantação</block>
   <block id="650b54030913723e437a2beaa84f5e95" category="inline-link-macro">Instalação do ONTAP Select</block>
@@ -3606,7 +3600,6 @@
   <block id="ef179550c4eb9da6a82350b32d807ed9" category="list-text">ESXi 7.0</block>
   <block id="9c33111b54c52c9fcb0abaf82c9004f8" category="paragraph">A partir do ONTAP Select 9.17.1, a expansão e a contração de cluster são suportadas em hosts do hipervisor KVM.</block>
   <block id="342972daa4f7bc941a67318ae7af313b" category="paragraph">A expansão e a contração de cluster são suportadas pelas seguintes versões do hipervisor KVM:</block>
-  <block id="e05b0c53b1a0c5711591f986de5de129" category="list-text">Red Hat Enterprise Linux 64 bits 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
   <block id="c0fa4ded01a6d24b2a77cd3a6b10e6e7" category="section-title">Expandir o cluster</block>
   <block id="e408638ff8e3e34af8feb723461e1722" category="paragraph">Use o recurso de expansão de cluster para aumentar o tamanho de um cluster ESXi ou KVM existente.</block>
   <block id="3678d282a88e095e0e76381ffa83ff7c" category="paragraph">Você pode aumentar o tamanho de um cluster ESXi existente nos seguintes incrementos:</block>
@@ -3937,4 +3930,18 @@
   <block id="1c5ffa58ac07641f5cec5616c07b2ba2" category="sidebar">Adicionar imagens ONTAP Select</block>
   <block id="0a15f7ba73868a32304fdf52855463c9" category="sidebar">Remover imagens ONTAP Select</block>
   <block id="afc9d68a1be701598b5ef94dc0be2844" category="sidebar">Recuperar implantação para um cluster de dois nós</block>
+  <block id="b76521bcf27ea3e363a5684a8eadacba" category="paragraph">Existem limitações de fluxo de trabalho RAID por software para hipervisores KVM em hosts RHEL 10.0 e Rocky Linux 10.0. Para obter mais informações, consulte os seguintes artigos da Base de Conhecimento:</block>
+  <block id="7aa075f63e63ec1b0898cf7eebd760f6" category="inline-link-macro">CDEPLOY-4020: ONTAP Select Deploy: Mensagem de aviso ao criar o Cluster HWR usando RHEL 10 e ROCKY 10</block>
+  <block id="7ceba9002504861c21a7c60ab97ce4d0" category="list-text"><block ref="7ceba9002504861c21a7c60ab97ce4d0" category="inline-link-macro-rx"></block></block>
+  <block id="05e40b852405f8fbe510662799c939d2" category="inline-link-macro">CDEPLOY-4025: ONTAP Select DeployGUI: Pools de armazenamento e discos de armazenamento não visíveis para SWR na página de criação de cluster em hosts com RHEL10/Rocky 10</block>
+  <block id="5b121e358e0c7c08ef9cd2f6ed82464f" category="list-text"><block ref="5b121e358e0c7c08ef9cd2f6ed82464f" category="inline-link-macro-rx"></block></block>
+  <block id="d9d617bd934a7dd3051a24a1a67ca9ca" category="paragraph">Red Hat Enterprise Linux (RHEL) 64 bits (KVM) 10.0, 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
+  <block id="b3511106033b4eaf52fa527685aee9bf" category="paragraph">Rocky Linux (KVM) 10.0, 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
+  <block id="ad350138b5fe5c3ae51dcb7a7bee26e5" category="paragraph">*Nota*: Existem limitações no fluxo de trabalho RAID por software para hipervisores KVM em hosts RHEL 10.0 e Rocky Linux 10.0. Para obter mais informações, consulte os seguintes artigos da Base de Conhecimento:</block>
+  <block id="ad503d6b4f8cd286498a440c78edf47c" category="list-text">A partir do ONTAP Select 9.17.1, o hipervisor KVM é suportado no Red Hat Enterprise Linux (RHEL) 10.0 e 9.6 e no Rocky Linux 10.0 e 9.6.</block>
+  <block id="9a6b54f1d41a9f7a21b56ebb01706042" category="list-text">KVM no Red Hat Enterprise Linux (RHEL) 10.0, 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
+  <block id="fc0e52e7a743e546179c3376db422db0" category="list-text">KVM no Rocky Linux 10.0, 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
+  <block id="c5a8db185a9f4a35ad276638f9533ab6" category="list-text">Red Hat Enterprise Linux (RHEL) 10.0, 9.6, 9.5, 9.4, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
+  <block id="5701e65b5391163c34edb9efc807ee5f" category="list-text">Rocky Linux 10.0, 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6</block>
+  <block id="77be5fd15bdb7705f2988a237003df51" category="list-text">Red Hat Enterprise Linux (RHEL) 64 bits 10.0, 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6</block>
 </blocks>
