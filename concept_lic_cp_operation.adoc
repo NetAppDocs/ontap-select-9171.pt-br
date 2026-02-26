@@ -48,7 +48,7 @@ Cada instância do Gerenciador de Licenças e, portanto, cada instância corresp
 Você pode determinar o ID de bloqueio de licença para sua instância de implantação usando a interface de usuário da Web das seguintes maneiras:
 
 * Página de Introdução Esta página é exibida quando você faz login pela primeira vez no Deploy. Você também pode exibi-la clicando na caixa suspensa no canto superior direito da página e selecionando Introdução. O LLID é exibido na seção Adicionar Licenças.
-* Administração Clique na aba *Administração* na parte superior da página, depois clique em *Sistemas* e *Configurações*.
+* Administração Clique na guia *Administração* na parte superior da página, depois clique em *Sistemas & AutoSupport*.
 
 
 
