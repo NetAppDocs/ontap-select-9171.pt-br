@@ -38,6 +38,10 @@ Os seguintes recursos do ONTAP são suportados pelo ONTAP Select e licenciados p
 * Capacidade de multilocação ONTAP
 * ONTAP S3
 * S3 SnapMirror
+* SnapLock Select
++
+SnapLock Select é a implementação do ONTAP SnapLock projetada para ONTAP Select e inclui SnapLock Enterprise. Não inclui SnapLock Compliance. Para mais informações, consulte o link:https://docs.netapp.com/us-en/ontap/snaplock/index.html["ONTAP SnapLock documentação"^].
+
 * SnapMirror
 * Nuvem SnapMirror
 * SnapRestore
@@ -61,7 +65,7 @@ Você precisa adquirir uma licença separada para qualquer recurso do ONTAP que 
 
 [NOTE]
 ====
-* Para o ONTAP Select 9.16.1 e versões anteriores, o SnapLock Select Enterprise (incluindo o bloqueio de snapshots à prova de adulteração) está disponível emlink:https://mysupport.netapp.com/site/["Site de suporte da NetApp"^] .
+* Para ONTAP Select 9.16.1 e versões anteriores, SnapLock Select (incluindo o bloqueio de snapshot à prova de adulteração) está disponível em link:https://mysupport.netapp.com/site/["Site de suporte da NetApp"^].
 * A SnapLock Compliance não é suportada pelo ONTAP Select.
 * Você não precisa de uma licença FabricPool ao utilizar o StorageGRID.
 
