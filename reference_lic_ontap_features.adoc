@@ -29,6 +29,9 @@ Os seguintes recursos do ONTAP são suportados pelo ONTAP Select e licenciados p
 * CIFS
 * Desduplicação e compactação
 * FlexCache
++
+Existem limitações no suporte para FlexCache write-back com ONTAP Select. Para obter mais informações, consulte link:https://docs.netapp.com/us-en/ontap-select/concept_ots_overview.html#flexcache-write-back-with-ontap-select["FlexCache write-back com ONTAP Select"^].
+
 * FlexClone
 * iSCSI
 * NDMP
@@ -40,10 +43,12 @@ Os seguintes recursos do ONTAP são suportados pelo ONTAP Select e licenciados p
 * S3 SnapMirror
 * SnapLock Select
 +
-SnapLock Select é a implementação do ONTAP SnapLock projetada para ONTAP Select e inclui SnapLock Enterprise. Não inclui SnapLock Compliance. Para mais informações, consulte o link:https://docs.netapp.com/us-en/ontap/snaplock/index.html["ONTAP SnapLock documentação"^].
+SnapLock Select é a implementação do ONTAP SnapLock projetada para ONTAP Select e inclui SnapLock Enterprise. Não inclui SnapLock Compliance.
+
++
+Saiba mais sobrelink:https://docs.netapp.com/us-en/ontap/snaplock/index.html["ONTAP SnapLock"^]
 
 * SnapMirror
-* Nuvem SnapMirror
 * SnapRestore
 * SnapVault
 * Recuperação de desastres de VM de armazenamento (SVM DR)
@@ -61,6 +66,13 @@ Você precisa adquirir uma licença separada para qualquer recurso do ONTAP que 
 
 * FabricPool
 * MetroCluster SDS (oferta de licença premium do ONTAP Select )
+* Nuvem SnapMirror
++
+Você precisa link:https://mysupport.netapp.com/site/help["Abra um chamado de suporte não técnico"^] obter uma licença SnapMirror na nuvem.
+
++
+Saiba mais sobrelink:https://docs.netapp.com/us-en/ontap/concepts/snapmirror-cloud-backups-object-store-concept.html["SnapMirror cloud backups para storage de objetos"^]
+
 
 
 [NOTE]
