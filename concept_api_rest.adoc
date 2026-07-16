@@ -18,12 +18,14 @@ A Transferência de Estado Representacional (REST) é um estilo para a criação
 
 
 
+[[architecture-and-classic-constraints]]
 == Arquitetura e restrições clássicas
 
 O conceito REST foi formalmente articulado por Roy Fielding em seu doutorado. https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm["dissertação"] na UC Irvine em 2000. Ela define um estilo arquitetônico por meio de um conjunto de restrições que, coletivamente, aprimoram aplicações web e os protocolos subjacentes. As restrições estabelecem uma aplicação de serviços web RESTful baseada em uma arquitetura cliente/servidor, utilizando um protocolo de comunicação sem estado.
 
 
 
+[[resources-and-state-representation]]
 == Recursos e representação estatal
 
 Os recursos são os componentes básicos de um sistema web. Ao criar uma aplicação de serviços web REST, as tarefas iniciais de design incluem:
@@ -36,12 +38,14 @@ As mensagens são trocadas entre o cliente e o servidor para acessar e alterar o
 
 
 
+[[uri-endpoints]]
 == Pontos finais de URI
 
 Cada recurso REST deve ser definido e disponibilizado usando um esquema de endereçamento bem definido. Os endpoints onde os recursos estão localizados e identificados usam um Identificador Uniforme de Recursos (URI). O URI fornece uma estrutura geral para a criação de um nome exclusivo para cada recurso na rede. O Localizador Uniforme de Recursos (URL) é um tipo de URI usado com serviços web para identificar e acessar recursos. Os recursos são normalmente expostos em uma estrutura hierárquica semelhante a um diretório de arquivos.
 
 
 
+[[http-messages]]
 == Mensagens HTTP
 
 O Protocolo de Transferência de Hipertexto (HTTP) é o protocolo usado pelo cliente e servidor de serviços web para trocar mensagens de solicitação e resposta sobre os recursos. Como parte do projeto de um aplicativo de serviços web, verbos HTTP (como GET e POST) são mapeados para os recursos e as ações de gerenciamento de estado correspondentes.
@@ -50,6 +54,7 @@ O HTTP não possui estado. Portanto, para associar um conjunto de solicitações
 
 
 
+[[json-formatting]]
 == Formatação JSON
 
 Embora as informações possam ser estruturadas e transferidas entre um cliente e um servidor de diversas maneiras, a opção mais popular (e a usada com a API REST do Deploy) é a JavaScript Object Notation (JSON). JSON é um padrão do setor para representar estruturas de dados simples em texto simples e é usado para transferir informações de estado que descrevem os recursos.

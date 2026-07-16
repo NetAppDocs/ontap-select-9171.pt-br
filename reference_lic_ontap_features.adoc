@@ -21,6 +21,7 @@ NOTE: Os recursos do ONTAP que têm dependências específicas de hardware geral
 
 
 
+[[ontap-features-automatically-enabled-by-default]]
 == Recursos do ONTAP habilitados automaticamente por padrão
 
 Os seguintes recursos do ONTAP são suportados pelo ONTAP Select e licenciados por padrão:
@@ -60,6 +61,7 @@ NOTE: O ONTAP Select suporta SVM DR como origem e destino, com um máximo de 16 
 
 
 
+[[ontap-features-that-are-separately-licensed]]
 == Recursos do ONTAP que são licenciados separadamente
 
 Você precisa adquirir uma licença separada para qualquer recurso do ONTAP que não esteja habilitado por padrão, incluindo:

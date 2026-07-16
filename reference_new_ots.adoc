@@ -19,6 +19,7 @@ Saiba mais sobre os novos recursos e aprimoramentos nas versões suportadas do O
 
 
 
+[[ontap-select-9-17-1]]
 == ONTAP Select 9.17.1
 
 O ONTAP Select 9.17.1 inclui vários novos recursos e melhorias.
@@ -76,9 +77,9 @@ O ONTAP Select Deploy e o ONTAP Select para ESX oferecem suporte à configuraç�
 
 [NOTE]
 ====
-Para executar operações na biblioteca de conteúdo, você precisará de acesso a níveis de permissão adicionais. Isso é necessário para implantações do vSAN ESA se você estiver trabalhando com funções restritas.
+Para executar operações na Biblioteca de Conteúdo, você precisa de acesso a níveis de permissão adicionais. Esse acesso é necessário para implantações do vSAN ESA se você estiver trabalhando com funções restritas.
 
-link:https://docs.netapp.com/us-en/ontap-select/reference_plan_dep_vmware.html["Saiba mais sobre como acessar níveis de permissão para operações de biblioteca de conteúdo"^].
+link:reference_plan_dep_vmware.html#vmware-vcenter-server-considerations["Saiba mais sobre os níveis de permissão de acesso para operações da Content Library"].
 
 ====
 --
@@ -105,6 +106,7 @@ Suporte aprimorado ao VMware ESXi:: O ONTAP Select 9.17.1 inclui suporte para VM
 
 
 
+[[ontap-select-9-16-1]]
 == ONTAP Select 9.16.1
 
 O ONTAP Select 9.16.1 inclui vários novos recursos e melhorias.
@@ -122,6 +124,7 @@ Suporte atualizado ao hipervisor KVM:: A partir do ONTAP Select 9.16.1, o hiperv
 
 
 
+[[ontap-select-9-15-1]]
 == ONTAP Select 9.15.1
 
 O ONTAP Select 9.15.1 inclui vários novos recursos e melhorias.
@@ -148,6 +151,7 @@ NOTE: O suporte para expansão e contração de clusters é limitado somente a c
 
 
 
+[[ontap-select-9-14-1]]
 == ONTAP Select 9.14.1
 
 O ONTAP Select 9.14.1 inclui vários novos recursos e melhorias.
@@ -160,6 +164,7 @@ Suporte aprimorado ao VMware ESXi:: O ONTAP Select 9.14.1 inclui suporte para VM
 
 
 
+[[ontap-select-9-13-1]]
 == ONTAP Select 9.13.1
 
 O ONTAP Select 9.13.1 inclui vários novos recursos e melhorias.
@@ -171,6 +176,7 @@ Suporte atualizado ao ONTAP Select Deploy:: A partir de abril de 2024, o ONTAP S
 
 
 
+[[ontap-select-9-12-1]]
 == ONTAP Select 9.12.1
 
 O ONTAP Select 9.12.1 se beneficia da maioria dos novos desenvolvimentos da versão atual do produto principal do ONTAP . Ele não inclui novos recursos ou melhorias específicas do ONTAP Select.
@@ -179,6 +185,7 @@ A partir de abril de 2024, o ONTAP Select Deploy 9.12.1 não estará mais dispon
 
 
 
+[[ontap-select-9-11-1]]
 == ONTAP Select 9.11.1
 
 O ONTAP Select 9.11.1 inclui vários novos recursos e melhorias.
@@ -209,6 +216,7 @@ A NetApp recomenda fortemente que os clientes planejem e executem uma migração
 
 
 
+[[ontap-select-9-10-1]]
 == ONTAP Select 9.10.1
 
 O ONTAP Select 9.10.1 inclui vários novos recursos e melhorias.
@@ -236,6 +244,7 @@ O hipervisor KVM não é mais suportado:: A partir do ONTAP Select 9.10.1, não 
 
 
 
+[[ontap-select-9-9-1]]
 == ONTAP Select 9.9.1
 
 O ONTAP Select 9.9.1 inclui vários novos recursos e melhorias.
@@ -253,6 +262,7 @@ Suporte VMware ESXi atualizado:: O suporte ao VMware ESXi foi aprimorado com o O
 
 
 
+[[ontap-select-9-8]]
 == ONTAP Select 9.8
 
 Há vários recursos novos e alterados incluídos no ONTAP Select 9.8.

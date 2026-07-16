@@ -18,12 +18,14 @@ Primeiro, familiarize-se com os conceitos gerais de rede aplicáveis ao ambiente
 
 
 
+[[physical-networking]]
 == Rede física
 
 A rede física suporta uma implantação de cluster ONTAP Select principalmente fornecendo a infraestrutura de comutação de camada 2 subjacente. A configuração relacionada à rede física inclui tanto o host do hipervisor quanto o ambiente de rede comutada mais amplo.
 
 
 
+[[host-nic-options]]
 === Opções de NIC do host
 
 Cada host do hipervisor ONTAP Select deve ser configurado com duas ou quatro portas físicas. A configuração exata que você escolher dependerá de vários fatores, incluindo:
@@ -36,6 +38,7 @@ Cada host do hipervisor ONTAP Select deve ser configurado com duas ou quatro por
 
 
 
+[[physical-switch-configuration]]
 === Configuração do switch físico
 
 Você deve garantir que a configuração dos switches físicos seja compatível com a implantação do ONTAP Select . Os switches físicos são integrados aos switches virtuais baseados em hipervisor. A configuração exata que você escolher depende de vários fatores. As principais considerações incluem o seguinte:
@@ -47,12 +50,14 @@ Você deve garantir que a configuração dos switches físicos seja compatível 
 
 
 
+[[logical-networking]]
 == Rede lógica
 
 O ONTAP Select utiliza duas redes lógicas diferentes, separando o tráfego por tipo. Especificamente, o tráfego pode fluir entre os hosts dentro do cluster, bem como para os clientes de armazenamento e outras máquinas fora do cluster. Os switches virtuais gerenciados pelos hipervisores ajudam a dar suporte à rede lógica.
 
 
 
+[[internal-network]]
 === Rede interna
 
 Em uma implantação de cluster com vários nós, os nós individuais do ONTAP Select se comunicam por meio de uma rede "interna" isolada. Essa rede não fica exposta nem disponível fora dos nós do cluster ONTAP Select .
@@ -82,6 +87,7 @@ A rede interna tem as seguintes características:
 
 
 
+[[external-network]]
 === Rede externa
 
 A rede externa processa o tráfego entre os nós de um cluster ONTAP Select e os clientes de armazenamento externo, bem como as outras máquinas. A rede externa faz parte de cada implantação de cluster e possui as seguintes características:
@@ -111,6 +117,7 @@ A rede externa está presente com clusters de todos os tamanhos.
 
 
 
+[[virtual-machine-networking-environment]]
 == Ambiente de rede de máquina virtual
 
 O host do hipervisor fornece vários recursos de rede.

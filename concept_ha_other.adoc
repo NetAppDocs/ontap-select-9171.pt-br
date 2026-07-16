@@ -18,6 +18,7 @@ O heartbeat de disco de alta disponibilidade (HA), a caixa de correio de HA, o h
 
 
 
+[[disk-heartbeating]]
 == Disco pulsante
 
 Embora a arquitetura ONTAP Select HA aproveite muitos dos caminhos de código usados pelos arrays FAS tradicionais, existem algumas exceções. Uma delas está na implementação de heartbeating baseado em disco, um método de comunicação não baseado em rede usado por nós de cluster para evitar que o isolamento da rede cause comportamento de "split-brain". Um cenário de "split-brain" é o resultado do particionamento de cluster, normalmente causado por falhas de rede, em que cada lado acredita que o outro está inativo e tenta assumir o controle dos recursos do cluster.
@@ -40,6 +41,7 @@ NOTE: A arquitetura de caixa de correio e o método de pulsação baseado em dis
 
 
 
+[[ha-mailbox-posting]]
 == Postagem de caixa de correio HA
 
 A arquitetura de caixa de correio de alta disponibilidade utiliza um modelo de postagem de mensagens. Em intervalos repetidos, os nós do cluster enviam mensagens para todos os outros discos de caixa de correio do cluster, incluindo o mediador, informando que o nó está ativo e em execução. Em um cluster íntegro, a qualquer momento, um único disco de caixa de correio em um nó do cluster recebe mensagens de todos os outros nós do cluster.
@@ -48,6 +50,7 @@ Anexado a cada nó do cluster Select, há um disco virtual usado especificamente
 
 
 
+[[ha-heartbeating]]
 == HA pulsação
 
 Assim como nas plataformas NetApp FAS , o ONTAP Select envia periodicamente mensagens de heartbeat de HA pela interconexão de HA. No cluster do ONTAP Select , isso é feito por meio de uma conexão de rede TCP/IP existente entre os parceiros de HA. Além disso, mensagens de heartbeat baseadas em disco são passadas para todos os discos da caixa de correio de HA, incluindo os discos da caixa de correio do mediador. Essas mensagens são passadas a cada poucos segundos e lidas periodicamente. A frequência com que são enviadas e recebidas permite que o cluster do ONTAP Select detecte eventos de falha de HA em aproximadamente 15 segundos, o mesmo período disponível nas plataformas FAS . Quando as mensagens de heartbeat não estão mais sendo lidas, um evento de failover é acionado.
@@ -61,6 +64,7 @@ NOTE: As pulsações de rede são enviadas pela interconexão de HA para o parce
 
 
 
+[[ha-failover-and-giveback]]
 == Failover e devolução de HA
 
 Durante uma operação de failover, o nó sobrevivente assume as responsabilidades de fornecimento de dados para seu nó par, usando a cópia local dos dados do seu parceiro de HA. A E/S do cliente pode continuar ininterrupta, mas as alterações nesses dados devem ser replicadas antes que o retorno possa ocorrer. Observe que o ONTAP Select não suporta um retorno forçado, pois isso causa a perda das alterações armazenadas no nó sobrevivente.

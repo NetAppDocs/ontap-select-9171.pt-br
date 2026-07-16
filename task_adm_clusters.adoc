@@ -18,6 +18,7 @@ Há várias tarefas relacionadas que você pode executar para administrar um clu
 
 
 
+[[move-an-ontap-select-cluster-offline-and-online]]
 == Mover um cluster ONTAP Select offline e online
 
 Depois de criar um cluster, você pode movê-lo para offline e online conforme necessário.
@@ -40,6 +41,7 @@ Se a opção offline não estiver disponível, o cluster já estará no estado o
 
 
 
+[[delete-an-ontap-select-cluster]]
 == Excluir um cluster ONTAP Select
 
 Você pode excluir um cluster ONTAP Select quando ele não for mais necessário.
@@ -59,6 +61,7 @@ Se a opção de exclusão não estiver disponível, o cluster não estará em um
 
 
 
+[[refresh-the-deploy-cluster-configuration]]
 == Atualizar a configuração do cluster de implantação
 
 Após criar um cluster ONTAP Select , você pode fazer alterações no cluster ou na configuração da máquina virtual fora do utilitário de implantação usando as ferramentas de administração do ONTAP ou do hipervisor. A configuração de uma máquina virtual também pode ser alterada após a migração.

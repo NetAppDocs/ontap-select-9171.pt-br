@@ -18,12 +18,14 @@ O ONTAP Select foi desenvolvido com base no software de armazenamento ONTAP para
 
 
 
+[[snapshot-data-protection]]
 == Proteção de dados instantâneos
 
 O ONTAP Select inclui recursos de proteção de dados, incluindo snapshots e o software SnapMirror . Você pode replicar seus dados rapidamente para outro armazenamento ONTAP , seja no local, em um local remoto ou na nuvem. Se você precisar recuperar seus dados rapidamente, o software SnapRestore pode usar snapshots locais para recuperar sistemas de arquivos ou volumes de dados inteiros em segundos, independentemente da capacidade ou do número de arquivos.
 
 
 
+[[metrocluster-software-defined-storage]]
 == Armazenamento definido por software MetroCluster
 
 O armazenamento definido por software (SDS) ONTAP Select MetroCluster oferece proteção aprimorada e uma implementação econômica.

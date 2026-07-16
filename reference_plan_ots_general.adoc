@@ -18,6 +18,7 @@ Há vários requisitos gerais que você deve considerar como parte do planejamen
 
 
 
+[[required-linux-knowledge-and-skills-for-kvm]]
 == Conhecimento e habilidades Linux necessários para KVM
 
 O Linux com o hipervisor KVM é um ambiente complexo para se trabalhar. Antes de implantar o ONTAP Select no KVM, você precisa ter o conhecimento e as habilidades necessárias.
@@ -61,6 +62,7 @@ Configuração de rede e Open vSwitch:: Você deve estar familiarizado com os co
 
 
 
+[[cluster-size-and-related-considerations]]
 == Tamanho do cluster e considerações relacionadas
 
 Há várias questões de planejamento relacionadas ao tamanho do cluster que você deve considerar.
@@ -71,6 +73,7 @@ Dedicado versus colocalizado:: Com base no tipo de aplicação, você deve deter
 
 
 
+[[hypervisor-host-considerations]]
 == Considerações sobre o host do hipervisor
 
 Há várias questões de planejamento relacionadas ao host do hipervisor que você deve considerar.
@@ -124,6 +127,7 @@ Integração do ONTAP Select com um cluster baseado em hardware ONTAP:: Não é 
 
 
 
+[[storage-considerations]]
 == Considerações sobre armazenamento
 
 Há várias questões de planejamento relacionadas ao armazenamento do host que você deve considerar.
@@ -156,6 +160,7 @@ Modelo de licenciamento para implantação de produção:: Você deve selecionar
 
 
 
+[[authentication-using-the-credential-store]]
 == Autenticação usando o armazenamento de credenciais
 
 O repositório de credenciais do ONTAP Select Deploy é um banco de dados que contém informações da conta. O Deploy usa as credenciais da conta para realizar a autenticação do host como parte da criação e do gerenciamento do cluster. Você deve estar ciente de como o repositório de credenciais é usado ao planejar uma implantação do ONTAP Select .

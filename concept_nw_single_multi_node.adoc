@@ -18,6 +18,7 @@ O ONTAP Select suporta configurações de rede de nó único e multinó.
 
 
 
+[[single-node-network-configuration]]
 == Configuração de rede de nó único
 
 As configurações ONTAP Select de nó único não exigem a rede interna ONTAP , porque não há tráfego de cluster, HA ou espelho.
@@ -41,6 +42,7 @@ NOTE: Embora dois adaptadores sejam suficientes para um cluster de nó único, o
 
 
 
+[[lif-assignment]]
 === Atribuição de LIF
 
 Conforme explicado na seção sobre atribuição de LIF multinó deste documento, os IPspaces são usados pelo ONTAP Select para manter o tráfego de rede do cluster separado do tráfego de dados e gerenciamento. A variante de nó único desta plataforma não contém uma rede de cluster. Portanto, não há portas presentes no IPspace do cluster.
@@ -50,6 +52,7 @@ NOTE: Os LIFs de gerenciamento de cluster e nó são criados automaticamente dur
 
 
 
+[[management-and-data-lifs-e0a-e0b-and-e0c]]
 === LIFs de gerenciamento e dados (e0a, e0b e e0c)
 
 As portas ONTAP e0a, e0b e e0c são delegadas como portas candidatas para LIFs que transportam os seguintes tipos de tráfego:
@@ -61,6 +64,7 @@ As portas ONTAP e0a, e0b e e0c são delegadas como portas candidatas para LIFs q
 
 
 
+[[multinode-network-configuration]]
 == Configuração de rede multinó
 
 A configuração de rede ONTAP Select multinó consiste em duas redes.
@@ -103,6 +107,7 @@ Observe que tanto o grupo de portas de rede externa quanto o de rede interna con
 
 
 
+[[lif-assignment]]
 === Atribuição de LIF
 
 Com a introdução dos IPspaces, as funções de porta do ONTAP foram descontinuadas. Assim como os arrays FAS , os clusters ONTAP Select contêm um IPspace padrão e um IPspace de cluster. Ao colocar as portas de rede e0a, e0b e e0g no IPspace padrão e as portas e0c e e0d no IPspace de cluster, essas portas foram essencialmente isoladas da hospedagem de LIFs que não pertencem a ele. As portas restantes dentro do cluster ONTAP Select são consumidas pela atribuição automática de interfaces que fornecem serviços internos. Elas não são expostas pelo shell do ONTAP , como é o caso das interfaces de interconexão RSM e HA.
@@ -114,6 +119,7 @@ As portas de rede e LIFs são explicadas em detalhes nas seções a seguir.
 
 
 
+[[management-and-data-lifs-e0a-e0b-and-e0g]]
 === LIFs de gerenciamento e dados (e0a, e0b e e0g)
 
 As portas ONTAP e0a, e0b e e0g são delegadas como portas candidatas para LIFs que transportam os seguintes tipos de tráfego:
@@ -128,6 +134,7 @@ NOTE: Os LIFs de gerenciamento de cluster e nó são criados automaticamente dur
 
 
 
+[[cluster-network-lifs-e0c-e0d]]
 === LIFs de rede de cluster (e0c, e0d)
 
 As portas ONTAP e0c e e0d são delegadas como portas home para interfaces de cluster. Dentro de cada nó de cluster ONTAP Select , duas interfaces de cluster são geradas automaticamente durante a configuração do ONTAP usando endereços IP locais de link (169.254.xx).
@@ -144,6 +151,7 @@ NOTE: Para garantir a máxima taxa de transferência para o tráfego de rede do 
 
 
 
+[[raid-syncmirror-traffic-e0e]]
 === Tráfego RAID SyncMirror (e0e)
 
 A replicação síncrona de blocos entre nós parceiros de HA ocorre usando uma interface de rede interna localizada na porta de rede e0e. Essa funcionalidade ocorre automaticamente, usando interfaces de rede configuradas pelo ONTAP durante a configuração do cluster, e não requer configuração por parte do administrador.
@@ -153,6 +161,7 @@ NOTE: A porta e0e é reservada pelo ONTAP para tráfego de replicação interna.
 
 
 
+[[ha-interconnect-e0f]]
 === Interconexão HA (e0f)
 
 Os arrays NetApp FAS utilizam hardware especializado para transmitir informações entre pares de HA em um cluster ONTAP . No entanto, ambientes definidos por software não costumam ter esse tipo de equipamento disponível (como dispositivos InfiniBand ou iWARP), portanto, uma solução alternativa é necessária. Embora diversas possibilidades tenham sido consideradas, os requisitos do ONTAP para o transporte de interconexão exigiam que essa funcionalidade fosse emulada em software. Como resultado, em um cluster ONTAP Select , a funcionalidade da interconexão de HA (tradicionalmente fornecida por hardware) foi projetada no sistema operacional, usando a Ethernet como mecanismo de transporte.

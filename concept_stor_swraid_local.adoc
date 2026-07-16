@@ -42,6 +42,7 @@ Independentemente das configurações de RAID de hardware, o ONTAP Select també
 ====
 
 
+[[software-raid-configuration-for-local-attached-storage]]
 == Configuração de RAID de software para armazenamento local conectado
 
 Ao usar RAID de software, a ausência de um controlador RAID de hardware é ideal, mas, se um sistema tiver um controlador RAID existente, ele deve atender aos seguintes requisitos:
@@ -59,6 +60,7 @@ NOTE: Os administradores precisam controlar quais unidades estão em uso pela VM
 
 
 
+[[ontap-select-virtual-and-physical-disks]]
 == ONTAP Select discos virtuais e físicos
 
 Para configurações com controladores RAID de hardware, a redundância de disco físico é fornecida pelo controlador RAID. O ONTAP Select é apresentado com um ou mais VMDKs a partir dos quais o administrador do ONTAP pode configurar agregados de dados. Esses VMDKs são distribuídos em um formato RAID 0 porque o uso do RAID de software do ONTAP é redundante, ineficiente e ineficaz devido à resiliência fornecida no nível do hardware. Além disso, os VMDKs usados para discos do sistema estão no mesmo repositório de dados que os VMDKs usados para armazenar dados do usuário.
@@ -98,6 +100,7 @@ Para clusters de nó único, todas as partições de dados são usadas para arma
 
 
 
+[[passthrough-directpath-io-devices-vs-raw-device-maps-rdms]]
 == Dispositivos Passthrough (DirectPath IO) vs. Mapas de Dispositivos Brutos (RDMs)
 
 Os hipervisores ESX e KVM não oferecem suporte a discos NVMe como Raw Device Maps (RDMs). Para permitir que o ONTAP Select assuma o controle direto dos discos NVMe, você deve configurar essas unidades como dispositivos de passagem no ESX ou KVM. Ao configurar um dispositivo NVMe como um dispositivo de passagem, ele requer suporte do BIOS do servidor e pode ser necessário reinicializar o host. Além disso, há limites para o número de dispositivos de passagem que podem ser atribuídos por host, que podem variar dependendo da plataforma. No entanto, o ONTAP Deploy limita isso a 14 dispositivos NVMe por nó ONTAP Select . Isso significa que a configuração NVMe fornece uma densidade de IOPs (IOPs/TB) muito alta em detrimento da capacidade total. Como alternativa, se você deseja uma configuração de alto desempenho com maior capacidade de armazenamento, a configuração recomendada é uma VM ONTAP Select de tamanho grande, uma placa INTEL Optane para o disco do sistema e um número nominal de unidades SSD para armazenamento de dados.
@@ -109,6 +112,7 @@ Há uma diferença adicional entre dispositivos de passagem e RDMs. Os RDMs pode
 
 
 
+[[physical-and-virtual-disk-provisioning]]
 == Provisionamento de disco físico e virtual
 
 Para proporcionar uma experiência mais otimizada ao usuário, o ONTAP Deploy provisiona automaticamente os discos do sistema (virtuais) a partir do repositório de dados especificado (disco físico do sistema) e os anexa à VM do ONTAP Select . Essa operação ocorre automaticamente durante a configuração inicial para que a VM do ONTAP Select possa inicializar. Os RDMs são particionados e o agregado raiz é criado automaticamente. Se o nó do ONTAP Select fizer parte de um par de HA, as partições de dados serão atribuídas automaticamente a um pool de armazenamento local e a um pool de armazenamento espelho. Essa atribuição ocorre automaticamente durante as operações de criação de cluster e de adição de armazenamento.
@@ -124,6 +128,7 @@ Semelhante aos sistemas FAS e AFF , você só pode adicionar unidades com capaci
 
 
 
+[[match-an-ontap-select-disk-to-the-corresponding-esx-or-kvm-disk]]
 == Associe um disco ONTAP Select ao disco ESX ou KVM correspondente
 
 Os discos ONTAP Select geralmente são rotulados como NET xy. Você pode usar o seguinte comando ONTAP para obter o UUID do disco:
@@ -165,6 +170,7 @@ cat /sys/block/<block_device_id>/device/wwid
 ====
 
 
+[[multiple-drive-failures-when-using-software-raid]]
 == Falhas de múltiplas unidades ao usar RAID de software
 
 É possível que um sistema se depare com uma situação em que várias unidades estejam com falha ao mesmo tempo. O comportamento do sistema depende da proteção RAID agregada e do número de unidades com falha.
@@ -244,6 +250,7 @@ A saída do último comando deve estar vazia.
 ====
 
 
+[[virtualized-nvram]]
 == NVRAM virtualizada
 
 Os sistemas NetApp FAS são tradicionalmente equipados com uma placa PCI NVRAM física. Esta placa é uma placa de alto desempenho que contém memória flash não volátil que proporciona um aumento significativo no desempenho de gravação. Ela faz isso concedendo ao ONTAP a capacidade de confirmar imediatamente as gravações recebidas de volta ao cliente. Ela também pode agendar a movimentação de blocos de dados modificados de volta para mídias de armazenamento mais lentas em um processo conhecido como desescalonamento.

@@ -18,6 +18,7 @@ O modelo de licenciamento de Pools de Capacidade é diferente do modelo de Níve
 
 
 
+[[license-manager]]
 == Gerenciador de licenças
 
 O Gerenciador de Licenças é executado como um processo separado dentro de cada instância do utilitário de administração Deploy. Algumas das funções fornecidas pelo LM incluem:
@@ -29,6 +30,7 @@ O Gerenciador de Licenças é executado como um processo separado dentro de cada
 
 
 
+[[lease-characteristics]]
 == Características do arrendamento
 
 O armazenamento alocado para cada agregado de dados em um nó que utiliza uma licença de Pool de Capacidade deve ter um lease associado. O nó solicita um lease de armazenamento e, se a capacidade estiver disponível, o Gerenciador de Licenças responde com um lease. Cada lease possui os seguintes atributos explícitos ou implícitos:
@@ -41,6 +43,7 @@ O armazenamento alocado para cada agregado de dados em um nó que utiliza uma li
 
 
 
+[[license-lock-id]]
 == ID de bloqueio de licença
 
 Cada instância do Gerenciador de Licenças e, portanto, cada instância correspondente do utilitário de Implantação, é identificada com um número exclusivo de 128 bits. Esse número é combinado com o número de série da licença do Pool de Capacidade de nove dígitos para bloquear o pool a uma instância específica do Gerenciador de Licenças (que é, na verdade, uma instância de Implantação). Você deve fornecer ambos os valores no site de suporte da NetApp como parte da geração do Arquivo de Licença da NetApp (NLF).
@@ -53,6 +56,7 @@ Você pode determinar o ID de bloqueio de licença para sua instância de implan
 
 
 
+[[basic-lease-operations]]
 == Operações básicas de arrendamento
 
 Um nó ONTAP Select deve localizar ou solicitar uma concessão de capacidade válida sempre que um agregado de dados for criado, expandido ou alterado. Uma concessão obtida de uma solicitação anterior que ainda seja válida pode ser usada, ou uma nova concessão pode ser solicitada, se necessário. O nó ONTAP Select executa as seguintes etapas para localizar uma concessão de pool de capacidade:
@@ -68,6 +72,7 @@ Um nó ONTAP Select deve localizar ou solicitar uma concessão de capacidade vá
 
 
 
+[[return-storage-capacity-to-a-capacity-pool]]
 == Retornar capacidade de armazenamento para um pool de capacidade
 
 A capacidade de armazenamento é alocada de um Pool de Capacidade conforme necessário, e cada nova solicitação pode reduzir o armazenamento disponível no pool. A capacidade de armazenamento é devolvida ao pool em diversas situações, incluindo:

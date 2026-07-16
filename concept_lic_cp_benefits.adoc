@@ -18,6 +18,7 @@ Há vários benefícios ao usar o modelo de licenciamento de Pools de Capacidade
 
 
 
+[[more-efficient-use-of-storage-capacity]]
 == Uso mais eficiente da capacidade de armazenamento
 
 Ao usar o licenciamento por Níveis de Capacidade, você aloca uma capacidade de armazenamento fixa para cada nó. Qualquer espaço não utilizado não pode ser compartilhado com os outros nós e é efetivamente desperdiçado. Com o licenciamento por Pools de Capacidade, cada nó consome apenas a capacidade necessária, com base no tamanho dos agregados de dados.
@@ -26,12 +27,14 @@ E como a capacidade está ancorada em um pool central, ela pode ser compartilhad
 
 
 
+[[significantly-reduced-administrative-overhead-resulting-in-lower-cost]]
 == Redução significativa da sobrecarga administrativa, resultando em custos mais baixos
 
 Se você usar licenças de Nível de Capacidade, precisará obter e instalar uma licença para cada nó. Ao usar Pools de Capacidade, há uma licença para cada pool compartilhado. Isso pode reduzir drasticamente a sobrecarga administrativa e resultar em custos mais baixos.
 
 
 
+[[improved-usage-metrics]]
 == Métricas de uso aprimoradas
 
 A interface de usuário web Deploy fornece informações de uso aprimoradas para os Pools de Capacidade. Você pode determinar rapidamente quanto armazenamento está sendo usado e disponível em um Pool de Capacidade, quais nós estão usando o armazenamento de um pool e de quais pools um cluster está alocando capacidade.

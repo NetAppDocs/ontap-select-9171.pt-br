@@ -28,6 +28,7 @@ Você pode atualizar diretamente para ONTAP Select Deploy 9.17.1 a partir do ONT
 ====
 
 
+[[step-1-download-the-package]]
 == Passo 1: baixar o pacote
 
 Para iniciar o processo de atualização, baixe o arquivo de atualização apropriado da máquina virtual ONTAP Select Deploy do link:https://mysupport.netapp.com/site/["Site de suporte da NetApp"^]. O pacote de atualização está formatado como um único arquivo compactado.
@@ -42,6 +43,7 @@ Para iniciar o processo de atualização, baixe o arquivo de atualização aprop
 
 
 
+[[step-2-upload-the-package-to-the-ontap-select-deploy-virtual-machine]]
 == Etapa 2: Carregue o pacote na máquina virtual ONTAP Select Deploy
 
 Depois de baixar o pacote, você precisa carregar o arquivo para a máquina virtual ONTAP Select Deploy.
@@ -67,6 +69,7 @@ O arquivo de atualização é armazenado no diretório inicial do usuário admin
 
 
 
+[[step-3-apply-the-upgrade-package]]
 == Etapa 3: aplique o pacote de atualização
 
 Depois de carregar o arquivo de atualização para a máquina virtual ONTAP Select Deploy, você pode aplicar a atualização.

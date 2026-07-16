@@ -18,6 +18,7 @@ Após determinar se o ONTAP Select é adequado para sua organização, você pod
 
 
 
+[[common-licensing-characteristics]]
 == Características comuns de licenciamento
 
 Os modelos de licenciamento _Níveis de Capacidade_ e _Pools de Capacidade_ são muito diferentes em vários aspectos. No entanto, os dois modelos de licenciamento compartilham várias características em comum, incluindo:
@@ -35,6 +36,7 @@ Os modelos de licenciamento _Níveis de Capacidade_ e _Pools de Capacidade_ são
 
 
 
+[[capacity-tiers-licensing-model]]
 == Modelo de licenciamento de níveis de capacidade
 
 Existem várias características exclusivas do modelo de licenciamento de níveis de capacidade, incluindo:
@@ -50,6 +52,7 @@ Existem várias características exclusivas do modelo de licenciamento de nívei
 
 
 
+[[capacity-pools-licensing-model]]
 == Modelo de licenciamento de pools de capacidade
 
 Existem várias características exclusivas do modelo de licenciamento de Pools de Capacidade, incluindo:

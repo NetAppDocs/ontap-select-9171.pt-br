@@ -18,6 +18,7 @@ Você pode usar a interface de linha de comando fornecida com o utilitário de a
 
 
 
+[[step-1-prepare-for-the-deployment]]
 == Etapa 1: preparar para a implantação
 
 Antes de criar um cluster ONTAP Select em um hipervisor, você deve entender a preparação necessária.
@@ -50,6 +51,7 @@ Antes de implantar um cluster ONTAP Select em um ambiente de produção, você d
 
 
 
+[[step-2-upload-and-register-a-license-file]]
 == Etapa 2: Carregar e registrar um arquivo de licença
 
 Após adquirir um arquivo de licença com capacidade de armazenamento, você deve carregar o arquivo contendo a licença na máquina virtual Deploy e registrá-lo.
@@ -91,6 +93,7 @@ license show
 
 
 
+[[step-3-add-hypervisor-hosts]]
 == Etapa 3: adicionar hosts do hipervisor
 
 Você deve registrar cada host do hipervisor onde um nó ONTAP Select será executado.
@@ -204,6 +207,7 @@ host show -name 10.234.81.14 -detailed
 ====
 
 
+[[step-4-create-and-configure-an-ontap-select-cluster]]
 == Etapa 4: criar e configurar um cluster ONTAP Select
 
 Você deve criar e configurar o cluster ONTAP Select . Após a configuração do cluster, você poderá configurar os nós individuais.
@@ -253,6 +257,7 @@ cluster show -name <cluster_name> -detailed
 
 
 
+[[step-5-configure-an-ontap-select-node]]
 == Etapa 5: Configurar um nó ONTAP Select
 
 Você deve configurar cada um dos nós no cluster ONTAP Select .
@@ -353,6 +358,7 @@ node show -name test-cluster-01 -cluster-name test-cluster -detailed
 
 
 
+[[step-6-attach-storage-to-the-ontap-select-nodes]]
 == Etapa 6: anexar armazenamento aos nós ONTAP Select
 
 Configure o armazenamento usado por cada nó no cluster ONTAP Select . Cada nó deve sempre ter pelo menos um pool de armazenamento atribuído. Ao usar RAID por software, cada nó também deve ter pelo menos uma unidade de disco atribuída.
@@ -446,6 +452,7 @@ node storage disk show -node-name sdot-smicro-009a -cluster-name NVME
 
 
 
+[[step-7-deploy-an-ontap-select-cluster]]
 == Etapa 7: implantar um cluster ONTAP Select
 
 Depois que o cluster e os nós forem configurados, você poderá implantar o cluster.

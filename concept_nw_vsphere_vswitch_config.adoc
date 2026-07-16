@@ -38,6 +38,7 @@ NOTE: O ONTAP Select suporta no máximo quatro VMNICs.
 
 
 
+[[standard-or-distributed-vswitch-and-four-physical-ports-per-node]]
 == vSwitch padrão ou distribuído e quatro portas físicas por nó
 
 Quatro grupos de portas podem ser atribuídos a cada nó em um cluster multinó. Cada grupo de portas possui uma única porta física ativa e três portas físicas em espera, como na figura a seguir.
@@ -106,6 +107,7 @@ Para facilitar a leitura, as atribuições são as seguintes:
 |===
 
 
+[[standard-or-distributed-vswitch-and-two-physical-ports-per-node]]
 == vSwitch padrão ou distribuído e duas portas físicas por nó
 
 Ao usar duas placas de rede de alta velocidade (25/40 Gb), a configuração de grupo de portas recomendada é conceitualmente muito semelhante à configuração com quatro adaptadores de 10 Gb. Quatro grupos de portas devem ser usados mesmo ao usar apenas dois adaptadores físicos. As atribuições dos grupos de portas são as seguintes:
@@ -134,6 +136,7 @@ image:DDN_13.jpg["vSwitch com duas portas físicas por nó"]
 
 
 
+[[distributed-vswitch-with-lacp]]
 == vSwitch distribuído com LACP
 
 Ao usar vSwitches distribuídos em sua configuração, o LACP pode ser usado (embora não seja uma prática recomendada) para simplificar a configuração da rede. A única configuração LACP suportada requer que todas as VMNICs estejam em um único LAG. O switch físico de uplink deve suportar um tamanho de MTU entre 7.500 e 9.000 em todas as portas do canal. As redes ONTAP Select interna e externa devem ser isoladas no nível do grupo de portas. A rede interna deve usar uma VLAN não roteável (isolada). A rede externa pode usar VST, EST ou VGT.

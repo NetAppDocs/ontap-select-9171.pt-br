@@ -18,6 +18,7 @@ Cada cluster de dois nós do ONTAP Select é monitorado pelo serviço mediador, 
 
 
 
+[[view-the-status-of-the-mediator-service]]
 == Ver o status do serviço de mediação
 
 Você pode visualizar o status do serviço do mediador em relação a cada um dos clusters de dois nós definidos para o utilitário ONTAP Select Deploy.

@@ -18,6 +18,7 @@ Há várias tarefas de diagnóstico e suporte relacionadas que você pode execut
 
 
 
+[[configure-the-deploy-system]]
 == Configurar o sistema de implantação
 
 Você deve definir os parâmetros básicos de configuração do sistema que afetam o funcionamento do utilitário Deploy.
@@ -42,6 +43,7 @@ Exemplo
 
 
 
+[[display-the-ontap-select-deploy-event-messages]]
 == Exibir as mensagens do evento ONTAP Select Deploy
 
 O utilitário ONTAP Select Deploy inclui um recurso de registro de eventos que fornece informações sobre a atividade do sistema. Você deve visualizar o conteúdo do registro de eventos para depurar quaisquer problemas ou quando instruído pelo suporte.
@@ -66,6 +68,7 @@ Você pode filtrar a lista de mensagens de eventos com base em diversas caracter
 
 
 
+[[enable-autosupport]]
 == Habilitar AutoSupport
 
 Você pode ativar e desativar o recurso AutoSupport conforme necessário.
@@ -82,6 +85,7 @@ O AutoSupport é a principal ferramenta de solução de problemas usada pela Net
 
 
 
+[[generate-and-download-an-autosupport-package]]
 == Gerar e baixar um pacote AutoSupport
 
 O ONTAP Select inclui a capacidade de gerar um pacote de AutoSupport . Você deve gerar um pacote para depurar quaisquer problemas ou quando instruído a fazê-lo pelo suporte.

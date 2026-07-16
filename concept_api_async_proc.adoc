@@ -18,6 +18,7 @@ Algumas chamadas da API de implantação, especialmente aquelas que criam ou mod
 
 
 
+[[asynchronous-requests-described-using-job-object]]
 == Solicitações assíncronas descritas usando o objeto Job
 
 Após realizar uma chamada de API executada de forma assíncrona, o código de resposta HTTP 202 indica que a solicitação foi validada e aceita com sucesso, mas ainda não foi concluída. A solicitação é processada como uma tarefa em segundo plano que continua em execução após a resposta HTTP inicial ao cliente. A resposta inclui o objeto Job que ancora a solicitação, incluindo seu identificador exclusivo.
@@ -27,6 +28,7 @@ NOTE: Você deve consultar a página de documentação on-line do ONTAP Select D
 
 
 
+[[query-the-job-object-associated-with-an-api-request]]
 == Consultar o objeto Job associado a uma solicitação de API
 
 O objeto Job retornado na resposta HTTP contém diversas propriedades. Você pode consultar a propriedade state para determinar se a solicitação foi concluída com sucesso. Um objeto Job pode estar em um dos seguintes estados:
@@ -55,6 +57,7 @@ TIP: Você deve sempre usar long polling para reduzir a carga de trabalho na má
 
 
 
+[[general-procedure-for-issuing-an-asynchronous-request]]
 == Procedimento geral para emissão de uma solicitação assíncrona
 
 Você pode usar o seguinte procedimento de alto nível para concluir uma chamada de API assíncrona:
